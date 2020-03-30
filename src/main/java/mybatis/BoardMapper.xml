@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.BoardMapper">
+	<cache />
+
+	<select id="getArticleCount" parameterType="String"
+		resultType="int">
+		select ifnull(count(*),0) from board where boardid =
+		#{boardid}
+	</select>
+
+	<select id="getArticles" parameterType="hashmap"
+		resultType="Board">
+		select * from board where category = #{category}
+		order by boardnum desc
+	</select>
+
+	<!-- Oracle용 코드 <select id="insert_max" resultType="int">
+		select max(boardnum)+1 from
+		board
+	</select> -->
+
+	<insert id="insert" parameterType="Board">
+		insert into board values
+		(#{boardnum},#{boardid},#{userid},#{filename},#{readcount},now(),#{subject}
+		,#{content},#{address},#{price},#{category})
+	</insert>
+
+	<update id="content_update" parameterType="int">
+		update board set
+		readcount=readcount + 1 where num = #{num}
+	</update>
+
+	<select id="getArticle" parameterType="int" resultType="Board">
+		select *
+		from board where num =#{num}
+	</select>
+
+	<select id="getPasswd" parameterType="int" resultType="string">
+		select
+		passwd from board where num = #{num}
+	</select>
+
+	<update id="update" parameterType="Board">
+		update board set
+		writer=#{writer},email=#{email}
+		,subject=#{subject},passwd=#{passwd},content=#{content} where
+		num=#{num}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from board where num =
+		#{num}
+	</delete>
+</mapper>

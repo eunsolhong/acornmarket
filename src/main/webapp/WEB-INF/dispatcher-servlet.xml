@@ -30,6 +30,11 @@
 	<bean class="repository.MybatisUserDao">
 		<property name="dbname" value="Oracle" />
 	</bean>
+	
+	<bean class="repository.MybatisBoardDao">
+		<property name="dbname" value="Oracle" />
+	</bean>
+	
 	<bean class="repository.MybatisWebNoteDao">
 		<property name="dbname" value="Oracle" />
 	</bean>
