@@ -7,8 +7,8 @@
 
 	<select id="getArticleCount" parameterType="String"
 		resultType="int">
-		select ifnull(count(*),0) from board where boardid =
-		#{boardid}
+		select ifnull(count(*),0) from board where category =
+		#{category}
 	</select>
 
 	<select id="getArticles" parameterType="hashmap"
@@ -24,18 +24,18 @@
 
 	<insert id="insert" parameterType="Board">
 		insert into board values
-		(#{boardnum},#{boardid},#{userid},#{filename},#{readcount},now(),#{subject}
-		,#{content},#{address},#{price},#{category})
+		(#{boardnum},#{userid},#{filename},#{readcount},now(),#{subject}
+		,#{content},#{address},#{price},#{category},#{passwd})
 	</insert>
 
 	<update id="content_update" parameterType="int">
 		update board set
-		readcount=readcount + 1 where num = #{num}
+		readcount=readcount + 1 where boardnum = #{boardnum}
 	</update>
 
 	<select id="getArticle" parameterType="int" resultType="Board">
 		select *
-		from board where num =#{num}
+		from board where boardnum =#{boardnum}
 	</select>
 
 	<select id="getPasswd" parameterType="int" resultType="string">
@@ -45,9 +45,9 @@
 
 	<update id="update" parameterType="Board">
 		update board set
-		writer=#{writer},email=#{email}
-		,subject=#{subject},passwd=#{passwd},content=#{content} where
-		num=#{num}
+		userid=#{userid},filename=#{filename},subject=#{subject}
+		,content=#{content},address=#{address},price=#{price},category=#{category},passwd=#{passwd} where
+		boardnum=#{boardnum}
 	</update>
 
 	<delete id="delete" parameterType="int">

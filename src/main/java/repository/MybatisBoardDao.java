@@ -16,12 +16,12 @@ import mybatis.AbstractRepository;
 public class MybatisBoardDao extends AbstractRepository {
 	private final String namespace = "mybatis.BoardMapper";
 
-	public int getArticleCount(String boardid) {
+	public int getArticleCount(String category) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			String statement = namespace + ".getArticleCount";
 			
-			return sqlSession.selectOne(statement, boardid);
+			return sqlSession.selectOne(statement, category);
 		} finally {
 			sqlSession.close();
 		}
@@ -98,25 +98,18 @@ public class MybatisBoardDao extends AbstractRepository {
 		return article;
 	}
 
-	public int updateArticle(Board article) throws Exception {
+	public void updateArticle(Board article) throws Exception {
+		
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		String dbpasswd = "";
-		int x = -1;
 		try {
-			dbpasswd = sqlSession.selectOne(namespace + ".getPasswd", article.getBoardnum());
-			if (dbpasswd.equals(article.getPasswd())) {
-				sqlSession.update(namespace + ".update", article);
+			sqlSession.update(namespace + ".update", article);
 				sqlSession.commit();
-				x = 1;
-			} else {
-				x = 0;
-			}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			sqlSession.close();
 		}
-		return x;
 	}
 
 	public int deleteArticle(int num, String passwd) throws Exception {

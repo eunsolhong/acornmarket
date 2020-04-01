@@ -24,7 +24,8 @@
 		<property name="prefix" value="/view/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<!-- <mvc:resources location="/img/, /WEB-INF/resources/" mapping="/img/**" 
+	
+	 <!-- <mvc:resources mapping="/img/**" location="/images/, /resources"
 		cache-period="60" /> -->
 
 	<bean class="repository.MybatisUserDao">
@@ -32,7 +33,7 @@
 	</bean>
 	
 	<bean class="repository.MybatisBoardDao">
-		<property name="dbname" value="Oracle" />
+		<property name="dbname" value="Mysql" />
 	</bean>
 	
 	<bean class="repository.MybatisWebNoteDao">

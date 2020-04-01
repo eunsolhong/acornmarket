@@ -69,7 +69,7 @@
                                     <ul id="navigation">
                                         <li><a href="about.html">도토리마켓소개</a></li>
                                         <li><a href="elements.html">공지사항</a></li>
-                                        <li><a href="blog.html">상품게시판</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/board/list">상품게시판</a></li>
                                         <li><a href="#">지역정보게시판</a></li>
                                         <li><a href="#">Q&A</a></li>
                                         <!-- <li><a href="#">공지사항<i class="ti-angle-down"></i></a>
@@ -89,21 +89,7 @@
                 </div>
             </div>
         </div>
-        
-        <!-- 검색창 -->
-	<nav class="nav1">
-		<div class="container">
-		<div class="right">
-			<form class="form-inline" action="/action_page.php">
-				<input class="form-control mr-sm-2" type="text" placeholder="도토리 찾기">
-				<button class="btn btn-outline-warning" type="submit"
-					style="height: 40px;">
-					<i class="fa fa-search"></i>
-				</button>
-			</form>
-		</div>
-		</div>
-	</nav>
+	
 	<br>
         
     </header>

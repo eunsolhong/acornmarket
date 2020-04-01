@@ -51,8 +51,8 @@ border-bottom: 0; }
 }
 
 /* 상품창 */
-.form-control { 
-	background-color: #FFFFFF;
+ .form-control[readonly]  { 
+	background-color: #fff;
 } 
 
 

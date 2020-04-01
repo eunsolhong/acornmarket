@@ -1,10 +1,12 @@
 package controller;
 
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +52,11 @@ public class BoardController {
 
 	@RequestMapping(value = "list")
 	public String board_list(HttpServletRequest request, Board article) {
-	//List 있어야함, 뷰단에서 li 뿌려줘야함
-		
-		
+		// List 있어야함, 뷰단에서 li 뿌려줘야함
+
+//		List li = dbPro.getArticles(article);
+//		m.addAttribute("li", li);
+
 		return "board/list";
 	}
 
@@ -63,18 +67,17 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "writePro", method = RequestMethod.POST)
-	public String board_writePro2(Board article,Model m) throws Exception {
-		
-		System.out.println(">>>>>>>test hello=======1" + article );
+	public String board_writePro2(Board article, Model m) throws Exception {
+
+		System.out.println(">>>>>>>test hello=======1" + article);
 		article.setFilename("null");
 		System.out.println("@@@@@2");
 		System.out.println("@@@@@3");
 		dbPro.insertArticle(article);
 		System.out.println("@@@@@4");
-		System.out.println(article.getCategory()+"@@@@@5");
-		m.addAttribute("category",article.getCategory());
-		
-		
+		System.out.println(article.getCategory() + "@@@@@5");
+		m.addAttribute("category", article.getCategory());
+
 //		파라미터에 HttpServletRequest multipart 추가해주기, 폼쪽에도 추가해줄거 enctype="multipart/form-data"
 //		MultipartFile multi = ((MultipartRequest) multipart).getFile("filename");
 //		
@@ -92,16 +95,16 @@ public class BoardController {
 //		}
 //		article.setBoardid(boardid);
 //		dbPro.insertArticle(article);
-		
-		
+
 		return "board/writePro";
 	}
-	
+
 	@RequestMapping(value = "categoryForm")
-	public String board_categoryForm(HttpServletRequest request,@RequestParam("category") String category,Model m) {
+	public String board_categoryForm(HttpServletRequest request, @RequestParam("category") String category, Model m) {
+
 		HttpSession session = request.getSession();
-		System.out.println(category+"@@@@");
-		
+		System.out.println(category + "@@@@");
+
 		int pageSize = 5;
 		int num = 9;
 		int currentPage = 1;
@@ -122,7 +125,7 @@ public class BoardController {
 		}
 
 		currentPage = (Integer) session.getAttribute("pageNum");
-		System.out.println(category+"@@@@");
+		System.out.println(category + "@@@@");
 		int count = dbPro.getArticleCount(category);
 
 		System.out.println(count);
@@ -139,7 +142,7 @@ public class BoardController {
 		// int endRow = currentPage * pageSize;
 
 		List li = dbPro.getArticles(startRow, endRow, category);
-		System.out.println(li+"@@@li");
+		System.out.println(li + "@@@li");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		int number = count - (currentPage - 1) * pageSize;
 
@@ -151,13 +154,13 @@ public class BoardController {
 			endPage = pageCount;
 
 		m.addAttribute("currentPage", currentPage);
-		m.addAttribute("startRow", startRow);
+		m.addAttribute("startRow", startRow); // 몇개를 보여줄건지
 		m.addAttribute("endRow", endRow);
 		m.addAttribute("count", count);
-		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("pageSize", pageSize); // 페이징작업
 		m.addAttribute("number", number);
-		m.addAttribute("bottomLine", bottomLine);
-		m.addAttribute("startPage", startPage);
+		m.addAttribute("bottomLine", bottomLine); // [1][2][3]
+		m.addAttribute("startPage", startPage);//
 		m.addAttribute("endPage", endPage);
 		m.addAttribute("pageCount", pageCount);
 
@@ -165,15 +168,76 @@ public class BoardController {
 
 		return "board/categoryForm";
 	}
-	
+
 	@RequestMapping(value = "content")
-	public String content (Board article, Model m) throws Exception {
-		
-		
-		
+	public String content(int num, Model m) throws Exception {
+
+		Board article = dbPro.getArticle(num);
+		m.addAttribute("article", article);
+		System.out.println(">>>>>>>" + article);
 		return "board/content";
-		
 	}
-	
-	
+
+	@RequestMapping(value = "updateForm")
+	public String board_updateForm(int num, Model m) {
+
+		Board article = dbPro.getUpdateArticle(num);
+		m.addAttribute("article", article);
+		
+		return "board/updateForm";
+	}
+
+	@RequestMapping(value = "updatePro", method = RequestMethod.POST)
+	public String board_updatePro(HttpServletRequest request, Board article, Model m) throws Exception {
+
+		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
+		System.out.println("~~~~~~~~~~ boardnum");
+		dbPro.updateArticle(article);
+		System.out.println("~~~~~~~~" + article);
+		
+		//list로 
+		
+		request.setAttribute("boardnum", boardnum);
+		
+		return "board/updatePro";
+	}
+
+	@RequestMapping(value = "deleteForm")
+	public String board_deleteForm(int num, Model m) {
+
+		m.addAttribute("num", num);
+		return "board/deleteForm";
+	}
+
+	@RequestMapping(value = "deletePro", method = RequestMethod.POST)
+	public String board_deletePro(int num, String passwd, Model m) throws Exception {
+
+		int check = dbPro.deleteArticle(num, passwd);
+		m.addAttribute("check", check);
+		return "board/deletePro";
+	}
+
+//	// 삭제
+//	   @RequestMapping(value = "userDelete", method = RequestMethod.GET)
+//	   public String boardDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//
+//	      response.setContentType("text/html; charset=UTF-8");
+//	      request.setCharacterEncoding("utf-8");
+//
+//	      PrintWriter script = response.getWriter();
+//	      script.println("<script>");
+//	      script.println(" if (confirm('정말 삭제하시겠습니까?')) {");
+//	      service.deleteUser(userId);
+//	      session.invalidate();
+//	      script.println(" alert('삭제가 완료되었습니다.');");
+//	      script.println("location.href = '/zSpringProject/main/main'");
+//	      script.println("   } else {");
+//	      script.println("alert('탈퇴를 취소합니다.');");
+//	      script.println("location.href = '/zSpringProject/user/myPage'}");
+//	      script.println("</script>");
+//	      script.close();
+//
+//	      return "redirect:/main/main";
+//	   }
+
 }
