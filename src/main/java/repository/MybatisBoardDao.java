@@ -20,7 +20,7 @@ public class MybatisBoardDao extends AbstractRepository {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			String statement = namespace + ".getArticleCount";
-			
+
 			return sqlSession.selectOne(statement, category);
 		} finally {
 			sqlSession.close();
@@ -36,9 +36,9 @@ public class MybatisBoardDao extends AbstractRepository {
 		map.put("category", category);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		
+
 		System.out.println(category);
-		
+
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			String statement = namespace + ".getArticles";
@@ -51,11 +51,11 @@ public class MybatisBoardDao extends AbstractRepository {
 	public void insertArticle(Board article) {
 		System.out.println("insertArticle");
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		
+
 		String statement = null;
-		
+
 		int number = article.getBoardnum();
-		
+
 		try {
 			article.setBoardnum(number);
 			sqlSession.insert(namespace + ".insert", article);
@@ -99,12 +99,12 @@ public class MybatisBoardDao extends AbstractRepository {
 	}
 
 	public void updateArticle(Board article) throws Exception {
-		
+
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			sqlSession.update(namespace + ".update", article);
-				sqlSession.commit();
-			
+			sqlSession.commit();
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {

@@ -67,34 +67,28 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "writePro", method = RequestMethod.POST)
-	public String board_writePro2(Board article, Model m) throws Exception {
+	public String board_writePro(HttpServletRequest multipart, Board article, Model m, String address1, String address2) throws Exception {
 
-		System.out.println(">>>>>>>test hello=======1" + article);
+		article.setAddress(address1 + " " + address2);
+		
 		article.setFilename("null");
-		System.out.println("@@@@@2");
-		System.out.println("@@@@@3");
-		dbPro.insertArticle(article);
-		System.out.println("@@@@@4");
-		System.out.println(article.getCategory() + "@@@@@5");
 		m.addAttribute("category", article.getCategory());
 
-//		파라미터에 HttpServletRequest multipart 추가해주기, 폼쪽에도 추가해줄거 enctype="multipart/form-data"
-//		MultipartFile multi = ((MultipartRequest) multipart).getFile("filename");
-//		
-//		String filename = multi.getOriginalFilename();
-//		if (filename != null && !filename.equals("")) {
-//			String uploadPath = multipart.getRealPath("/") + "/uploadFile";
-//			System.out.println(uploadPath);
-//
-//			FileCopyUtils.copy(multi.getInputStream(),
-//					new FileOutputStream(uploadPath + "/" + multi.getOriginalFilename()));
-//
-//			article.setFilename(filename);
-//		} else {
-//			article.setFilename("");
-//		}
-//		article.setBoardid(boardid);
-//		dbPro.insertArticle(article);
+		MultipartFile multi = ((MultipartRequest) multipart).getFile("uploadfile");
+
+		String filename = multi.getOriginalFilename();
+		if (filename != null && !filename.equals("")) {
+			String uploadPath = multipart.getRealPath("/") + "/uploadFile";
+
+			FileCopyUtils.copy(multi.getInputStream(),
+					new FileOutputStream(uploadPath + "/" + multi.getOriginalFilename()));
+
+			article.setFilename(filename);
+		} else {
+			article.setFilename("");
+		}
+
+		dbPro.insertArticle(article);
 
 		return "board/writePro";
 	}
@@ -103,7 +97,6 @@ public class BoardController {
 	public String board_categoryForm(HttpServletRequest request, @RequestParam("category") String category, Model m) {
 
 		HttpSession session = request.getSession();
-		System.out.println(category + "@@@@");
 
 		int pageSize = 5;
 		int num = 9;
@@ -125,7 +118,6 @@ public class BoardController {
 		}
 
 		currentPage = (Integer) session.getAttribute("pageNum");
-		System.out.println(category + "@@@@");
 		int count = dbPro.getArticleCount(category);
 
 		System.out.println(count);
@@ -142,7 +134,7 @@ public class BoardController {
 		// int endRow = currentPage * pageSize;
 
 		List li = dbPro.getArticles(startRow, endRow, category);
-		System.out.println(li + "@@@li");
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		int number = count - (currentPage - 1) * pageSize;
 
@@ -173,8 +165,8 @@ public class BoardController {
 	public String content(int num, Model m) throws Exception {
 
 		Board article = dbPro.getArticle(num);
+		
 		m.addAttribute("article", article);
-		System.out.println(">>>>>>>" + article);
 		return "board/content";
 	}
 
@@ -183,7 +175,7 @@ public class BoardController {
 
 		Board article = dbPro.getUpdateArticle(num);
 		m.addAttribute("article", article);
-		
+
 		return "board/updateForm";
 	}
 
@@ -191,18 +183,16 @@ public class BoardController {
 	public String board_updatePro(HttpServletRequest request, Board article, Model m) throws Exception {
 
 		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
-		System.out.println("~~~~~~~~~~ boardnum");
 		dbPro.updateArticle(article);
-		System.out.println("~~~~~~~~" + article);
-		
-		//list로 
-		
+
+		// list로 받아서 어쩌고하기 boardnum 가지고가세용
+
 		request.setAttribute("boardnum", boardnum);
-		
+
 		return "board/updatePro";
 	}
 
-	@RequestMapping(value = "deleteForm")
+	@RequestMapping(value = "delete")
 	public String board_deleteForm(int num, Model m) {
 
 		m.addAttribute("num", num);
@@ -212,32 +202,10 @@ public class BoardController {
 	@RequestMapping(value = "deletePro", method = RequestMethod.POST)
 	public String board_deletePro(int num, String passwd, Model m) throws Exception {
 
+		
 		int check = dbPro.deleteArticle(num, passwd);
 		m.addAttribute("check", check);
 		return "board/deletePro";
 	}
-
-//	// 삭제
-//	   @RequestMapping(value = "userDelete", method = RequestMethod.GET)
-//	   public String boardDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//
-//	      response.setContentType("text/html; charset=UTF-8");
-//	      request.setCharacterEncoding("utf-8");
-//
-//	      PrintWriter script = response.getWriter();
-//	      script.println("<script>");
-//	      script.println(" if (confirm('정말 삭제하시겠습니까?')) {");
-//	      service.deleteUser(userId);
-//	      session.invalidate();
-//	      script.println(" alert('삭제가 완료되었습니다.');");
-//	      script.println("location.href = '/zSpringProject/main/main'");
-//	      script.println("   } else {");
-//	      script.println("alert('탈퇴를 취소합니다.');");
-//	      script.println("location.href = '/zSpringProject/user/myPage'}");
-//	      script.println("</script>");
-//	      script.close();
-//
-//	      return "redirect:/main/main";
-//	   }
-
-}
+	
+}// class end

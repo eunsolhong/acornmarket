@@ -1,4 +1,3 @@
-h3.h3{text-align:center;margin:1em;text-transform:capitalize;font-size:1.7em;}
 
 /* 카테고리 */
 .right{
@@ -57,7 +56,14 @@ a.list-group-item.active small {
 }
 
 .well {
-	width: 72%
+	width: 72%;
+}
+	
+.well.well2 {
+	background-color: #fff;
 }
 
+.writebutton{
+	text-align: right;
+}
 }

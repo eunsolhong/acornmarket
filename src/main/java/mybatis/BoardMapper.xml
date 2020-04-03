@@ -40,7 +40,7 @@
 
 	<select id="getPasswd" parameterType="int" resultType="string">
 		select
-		passwd from board where num = #{num}
+		passwd from board where boardnum = #{boardnum}
 	</select>
 
 	<update id="update" parameterType="Board">
@@ -51,7 +51,7 @@
 	</update>
 
 	<delete id="delete" parameterType="int">
-		delete from board where num =
-		#{num}
+		delete from board where boardnum =
+		#{boardnum}
 	</delete>
 </mapper>

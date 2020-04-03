@@ -39,7 +39,8 @@ label {
 					<br>
 				<form method="post" action="deletePro">
 					<label> <input class="w3-input" type="password"
-						name="passwd" placeholder="passwd" size="30" />
+						name="passwd" placeholder="비밀번호 입력" size="30" /> <input
+						type="hidden" name="num" value="${num}">
 					</label> <input type="submit" class="w3-button w3-round-large" value="확인"
 						style="background-color: #f0e68c;" />
 				</form>

@@ -48,4 +48,9 @@ border-bottom: 0; }
 	width: 170%;
 }
 
+.cont1 {
+	width: 301px;
+	display: inline-block;
+}
+
 }
