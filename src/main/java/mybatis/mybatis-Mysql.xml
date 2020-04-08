@@ -8,6 +8,7 @@
 	<typeAliases>
 		<typeAlias type="model.User" alias="User"/>
 		<typeAlias type="model.Board" alias="Board"/>
+		<!-- <typeAlias type="model.Reply" alias="Reply"/> -->
 	</typeAliases>
 	
 	<environments default="development">
@@ -25,5 +26,6 @@
 	<mappers>
 		<mapper resource="mybatis/UserMapper.xml"/>
 		<mapper resource="mybatis/BoardMapper.xml"/>
+		<!-- <mapper resource="mybatis/ReplyMapper.xml"/> -->
 	</mappers>
 </configuration>

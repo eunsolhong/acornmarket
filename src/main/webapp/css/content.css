@@ -80,4 +80,13 @@
 	display : inherit;
 	margin: 0px auto;
 }
+
+/* 댓글창 */
+.re1 {
+	width: 103%;
+}
+
+.button1{
+	margin-left: 33%;
+}
 }

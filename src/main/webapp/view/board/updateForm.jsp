@@ -59,7 +59,6 @@
 									<input type="hidden" name="boardnum" value="${article.boardnum}">
 									<!-- <input type="hidden" name="userid" value="22"> -->
 									<input type="hidden" name="passwd" value="${article.passwd}">
-									<input type="hidden" name="filename" value="${article.filename}">
 									<input type="hidden" name="regdate" value="${article.regdate}">
 									<input type="hidden" name="readcount" value="${article.readcount}">
 									

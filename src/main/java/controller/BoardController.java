@@ -2,7 +2,9 @@ package controller;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import model.Board;
 import repository.MybatisBoardDao;
+import repository.MybatisReplyDao;
 
 @Controller
 @RequestMapping("/board/")
@@ -33,6 +36,9 @@ public class BoardController {
 	@Autowired
 	MybatisBoardDao dbPro;
 
+//	@Autowired
+//	MybatisReplyDao replyPro;
+	
 	@ModelAttribute
 	public void initProcess(HttpServletRequest request) {
 
@@ -51,12 +57,13 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "list")
-	public String board_list(HttpServletRequest request, Board article) {
-		// List 있어야함, 뷰단에서 li 뿌려줘야함
-
-//		List li = dbPro.getArticles(article);
-//		m.addAttribute("li", li);
-
+	public String board_list(HttpServletRequest request, Model m) {
+		
+			List li = dbPro.getlistArticles();
+			System.out.println(">>>>>" + li );
+			m.addAttribute("li", li);
+		
+			
 		return "board/list";
 	}
 
@@ -183,9 +190,8 @@ public class BoardController {
 	public String board_updatePro(HttpServletRequest request, Board article, Model m) throws Exception {
 
 		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
+		
 		dbPro.updateArticle(article);
-
-		// list로 받아서 어쩌고하기 boardnum 가지고가세용
 
 		request.setAttribute("boardnum", boardnum);
 

@@ -127,7 +127,7 @@
 									</div>
 
 									<div style="float: center; width: 70%;">
-										<div style="border: 3px solid skyblue; height: 350px;"
+										<div style=" height: 350px;"
 											id="map"></div>
 									</div>
 									<br>
@@ -138,7 +138,7 @@
 											name="content" maxlength="300" rows="20" readonly>${article.content}</textarea>
 									</div>
 
-									<div class=button style="margin-left: 33%;">
+									<div class=button1>
 										<input type="button" value="글수정"
 											onclick="location.href='${pageContext.request.contextPath}/board/updateForm?num=${article.boardnum}'">&nbsp;&nbsp;
 										<input type="button" value="글삭제"
@@ -148,51 +148,76 @@
 											onclick="location.href='${pageContext.request.contextPath}/board/categoryForm?category=${article.category}'">
 										<p></p>
 									</div>
-								</form>
+
+									<hr>
+
+									<!-- 댓글창 -->
+									<div class="form-group1 re1">
+										<div class="col-md-12">
+											<textarea class="form-control" id="textarea" name="comment"
+												cols="40" rows="3" placeholder="댓글로 자유롭게 거래하세요!"></textarea>
+										</div>
+									</div>
+									<p></p>
+									<div class=button1 style="margin-left: 33%;">
+										<input type="button" value="댓글작성">
+									</div>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	</div>
+	</div>
 	<script>
-	//container : 지도를 표시할 div의 아이디
-	var container = document.getElementById('map');
-	var options = {
-		//center : 지도 생성시 반드시 필요. (지도 중심 좌표) / LatLng : 위·경도 죄표[위도(latitude), 경도(longitude)]
-		center: new kakao.maps.LatLng(33.450701, 126.570667),
-		//level : 지도 확대 레벨
-		level: 3
-	};
-
+		//container : 지도를 표시할 div의 아이디
+		var container = document.getElementById('map');
+		var options = {
+			//center : 지도 생성시 반드시 필요. (지도 중심 좌표) / LatLng : 위·경도 죄표[위도(latitude), 경도(longitude)]
+			center : new kakao.maps.LatLng(33.450701, 126.570667),
+			//level : 지도 확대 레벨
+			level : 3
+		};
 	</script>
 	<script>
-	// 마커 이미지의 이미지 주소입니다 
-	var imageSrc =
-	"http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-	// 마커 이미지의 이미지 크기 입니다 
-	var imageSize = new kakao.maps.Size(24, 35); 
-	//마커 이미지를 생성합니다 
-	var markerImage = new kakao.maps.MarkerImage(imageSrc,imageSize); 
-	//지도 생성 
-	var map = new kakao.maps.Map(container, options);
-	//주소 - 좌표 변환 객체 생성 
-	var geocoder = new kakao.maps.services.Geocoder();
-	//주소로 좌표 검색 
-	geocoder.addressSearch('${address}',function(result,
-	status){ if(status == kakao.maps.services.Status.OK){ var coders = new
-	kakao.maps.LatLng(result[0].y, result[0].x); 
-	//결과값으로 받은 위경도를 마커로 표시한다.
-	var marker = new kakao.maps.Marker({ map:map, position:coders, 
-		image :markerImage, // 마커 이미지
-	title : '${address}' // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다 }); 
-	//인포윈도우로 현재 장소에 대한 설명. 
-	var infowindow = new kakao.maps.InfoWindow({ 
-		content : '<div style="width: 150px; text-align: center; padding: 5px; font-size: 12px;">현재위치</div>
-	' }); infowindow.open(map, marker); 
-	//지도의 중심 좌표를 결과값을 받은 위치로 변경
-	map.setCenter(coders); } });
+		// 마커 이미지의 이미지 주소입니다 
+		var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+		// 마커 이미지의 이미지 크기 입니다 
+		var imageSize = new kakao.maps.Size(24, 35);
+		//마커 이미지를 생성합니다 
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+		//지도 생성 
+		var map = new kakao.maps.Map(container, options);
+		//주소 - 좌표 변환 객체 생성 
+		var geocoder = new kakao.maps.services.Geocoder();
+		//주소로 좌표 검색 
+		geocoder
+				.addressSearch(
+						'${article.address}',
+						function(result, status) {
+							if (status == kakao.maps.services.Status.OK) {
+								var coders = new kakao.maps.LatLng(result[0].y,
+										result[0].x);
+								//결과값으로 받은 위경도를 마커로 표시한다.
+								var marker = new kakao.maps.Marker({
+									map : map,
+									position : coders,
+									image : markerImage, // 마커 이미지
+									title : '${article.address}' // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다 
+								});
+								//인포윈도우로 현재 장소에 대한 설명. 
+								var infowindow = new kakao.maps.InfoWindow(
+										{
+											content : '<div style="width: 150px; text-align: center; padding: 5px; font-size: 12px;">현재위치</div>'
+										});
+								infowindow.open(map, marker);
+								//지도의 중심 좌표를 결과값을 받은 위치로 변경
+								map.setCenter(coders);
+							}
+						});
 	</script>
 
 

@@ -98,9 +98,9 @@
 					<div class="col-md-4 col-sm-6">
 						<div class="product-grid8">
 							<div class="product-image8">
-								<a href="#"> 
-								<img class="pic-1" src="${pageContext.request.contextPath}/uploadfile/${li.filename}"> 
-								<img class="pic-2" src="${pageContext.request.contextPath}/uploadfile/${li.filename}">
+								<a href=""> 
+								<img class="pic-1" src="${pageContext.request.contextPath}/uploadFile/${list.filename}"> 
+								<img class="pic-2" src="${pageContext.request.contextPath}/uploadFile/${list.filename}">
 								</a>
 								<ul class="social">
 									<li><a href="" class="fa fa-heart"
@@ -108,12 +108,14 @@
 								</ul>
 							</div>
 							<div class="product-content">
-								<div class="price">${li.subject}</div>
-								<span class="product-shipping">${li.price}</span>
+								<div class="price">${list.subject}</div>
+								<span class="product-shipping">${list.price}원</span>
 							</div>
 						</div>
 					</div>
 					</c:forEach>
+					
+					
 					
 					
 					

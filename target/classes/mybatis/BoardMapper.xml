@@ -16,6 +16,11 @@
 		select * from board where category = #{category}
 		order by boardnum desc
 	</select>
+	
+	<select id="getlistArticles" resultType="Board">
+		 select * from board where date_format(regdate, "%y%m%d") = curdate()
+	</select>
+	
 
 	<!-- Oracle용 코드 <select id="insert_max" resultType="int">
 		select max(boardnum)+1 from

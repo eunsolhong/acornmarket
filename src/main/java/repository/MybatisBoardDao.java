@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +39,6 @@ public class MybatisBoardDao extends AbstractRepository {
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 
-		System.out.println(category);
-
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			String statement = namespace + ".getArticles";
@@ -47,6 +47,21 @@ public class MybatisBoardDao extends AbstractRepository {
 			sqlSession.close();
 		}
 	}
+	
+	
+	public List<Board> getlistArticles() {
+		
+		
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			String statement = namespace + ".getlistArticles";
+
+			return sqlSession.selectList(statement);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
 
 	public void insertArticle(Board article) {
 		System.out.println("insertArticle");
