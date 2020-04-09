@@ -1,0 +1,329 @@
+@CHARSET "UTF-8";
+
+.single {
+	width: 80%;
+	padding: 30px 15px;
+	/* margin-top: 40px; */
+	background: #fcfcfc;
+	border: 1px solid #f0f0f0;
+}
+
+.single h3.side-title {
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 0;
+	font-size: 20px;
+	color: #333;
+	text-transform: uppercase;
+}
+
+.single h3.side-title:after {
+	content: '';
+	width: 60px;
+	height: 1px;
+	background: #ff173c;
+	display: block;
+	margin-top: 6px;
+}
+
+.single ul {
+	margin-bottom: 0;
+}
+
+.single li a {
+	color: #666;
+	font-size: 14px;
+	text-transform: uppercase;
+	border-bottom: 1px solid #f0f0f0;
+	line-height: 40px;
+	display: block;
+	text-decoration: none;
+}
+
+.single li a:hover {
+	color: #ff173c;
+}
+
+.single li:last-child a {
+	border-bottom: 0;
+}
+
+.right_area {
+	position: absolute;
+	left: 0px;
+	top: 25px;
+	right: 0;
+	min-width: 100%;
+	border-left: 1px solid #ddd;
+}
+
+.page_box {
+	position: relative;
+	padding: 15px 18px 15px 15px;
+	margin-top: -1px;
+	border-top: 1px solid #ddd;
+	/* border-left: 1px solid #ddd; */
+	border-bottom: 1px solid #ddd;
+	background: #fff;
+}
+
+.page_box:after {
+	display: block;
+	clear: both;
+	content: "";
+}
+
+.title-page, .txt_selected_division, .font-mss {
+	font-family: "Open Sans", sans-serif !important;
+}
+
+.title-page {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 24px;
+	height: 17px;
+	line-height: 17px;
+	font-weight: normal;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+
+.page_cs_main .page_box .section_search {
+	clear: both;
+	margin-top: 20px;
+}
+
+.input_cs {
+	border: 2px solid #000;
+	width: 203px;
+	height: 26px;
+	padding-left: 5px;
+	display: inline-block;
+}
+
+.btn_black_basic {
+	background: #000;
+	color: #fff;
+	display: inline-block;
+	text-align: center;
+	font-weight: bold;
+	line-height: 30px;
+	width: 65px;
+}
+
+.box_reference_cs {
+	margin-top: 10px;
+	color: #666;
+}
+
+.right_contents_pd10 {
+	padding: 10px 10px 10px 20px;
+	clear: both;
+	border-bottom: 1px solid #ddd;
+}
+
+.cs_center {
+	display: inline-block;
+}
+
+.title-page, .txt_selected_division, .font-mss {
+	font-family: "Open Sans", sans-serif !important;
+}
+
+.cs_number {
+	font-family: 'Open Sans', Arial, sans-serif;
+	font-size: 30px;
+}
+
+.cs_number span {
+	font-size: 18px;
+	margin-top: 30px;
+	line-height: 30px;
+	margin-right: 5px;
+}
+
+.txt_time_cs {
+	font-family: "Open Sans", Open Sans, Arial, sans-serif;
+	margin-top: 15px;
+	line-height: 18px;
+}
+
+.cs_menu {
+	display: inline-block;
+	margin-left: 30px;
+	font-family: "Open Sans", "Open Sans", Arial, sans-serif;
+	width: 450px;
+}
+
+.cs_menu ul li {
+	color: #999;
+	margin-right: 20px;
+	border-bottom: 1px solid #ddd;
+	line-height: 30px;
+	width: 166px;
+	float: left;
+}
+
+.cs_menu ul li a {
+	display: block;
+}
+
+.cs_menu ul li span {
+	font-family: 'Open Sans', Arial, sans-serif;
+	color: #000;
+	font-size: 16px;
+	vertical-align: bottom;
+	margin-right: 5px;
+}
+
+.cs_menu ul li.last {
+	border-bottom: 0;
+}
+
+.section_contents {
+	position: relative;
+}
+
+.right_contents {
+	clear: both;
+	position: relative;
+	padding: 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.title_cs {
+	font-size: 18px;
+	font-family: 'Open Sans';
+	color: #000;
+	display: inline-block;
+}
+
+.page_cs_main .section_contents .title_cs span {
+	vertical-align: middle;
+}
+
+.mypage_type {
+	display: table;
+	width: 100%;
+	min-width: 920px;
+	height: 32px;
+	margin-top: 20px;
+	*zoom: 1;
+	border: 1px solid #ddd;
+	border-left: none;
+	box-sizing: border-box;
+}
+
+.mypage_type li {
+	display: table-cell;
+	width: 9.09%;
+}
+
+.mypage_type li a {
+	border-left: 1px solid #ddd;
+	box-sizing: border-box;
+}
+
+.mypage_type a {
+	display: block;
+	width: 100%;
+	height: 30px;
+	color: #b2b2b2;
+	text-align: center;
+	line-height: 30px;
+}
+
+.table_basic {
+	clear: both;
+	min-width: 920px;
+	width: 100%;
+	font-family: "Open Sans", Open Sans, Arial, sans-serif;
+	text-align: center;
+	background: #fff;
+}
+
+.table_basic td {
+	line-height: 16.8px;
+	padding: 10px 0;
+}
+
+.page_cs_main .table_basic tr:first-child {
+	border-top: none;
+}
+
+.table_basic tr {
+	border: 1px solid #ddd;
+}
+
+.table_basic th {
+	vertical-align: middle;
+	padding: 10px 0;
+}
+
+.page_cs_main .section_contents .table_basic .txt_contents {
+	padding: 0;
+	text-align: left;
+}
+
+.page_cs_main .section_contents .table_basic .txt_contents a {
+	padding: 10px 0;
+	display: block;
+}
+
+.right_contents:after {
+	clear: both;
+	display: block;
+	content: "";
+}
+
+.page_cs_main .cell_cs_main {
+	border-bottom: 1px solid #ddd;
+	padding: 20px;
+}
+
+.title_cs span {
+	font-size: 12px;
+}
+
+.page_cs_main .cell_cs_main .cs_notice {
+	margin-top: 20px;
+}
+
+.cs_notice ul li {
+	margin-bottom: 2px;
+	font-family: "Open Sans", "Open Sans", Arial, sans-serif;
+}
+
+.cs_notice ul li a {
+	display: block;
+	line-height: 24px;
+}
+
+.cs_notice ul li a:before {
+	content: "-";
+	padding-right: 5px;
+}
+
+.cs_notice ul:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.page_cs_main .cell_cs_main .title_cs span {
+	vertical-align: middle;
+}
+
+.faq_q {
+	color: #000;
+}
+
+.table_basic td.faq_a {
+	padding-right: 15px;
+}
+
+.faq_a {
+	color: #000;
+	text-align: left;
+	line-height: 18px;
+}

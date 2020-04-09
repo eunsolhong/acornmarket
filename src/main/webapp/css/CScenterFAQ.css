@@ -1,0 +1,278 @@
+@CHARSET "UTF-8";
+
+.single {
+	width: 80%;
+	padding: 30px 15px;
+	/* margin-top: 40px; */
+	background: #fcfcfc;
+	border: 1px solid #f0f0f0;
+}
+
+.single h3.side-title {
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 0;
+	font-size: 20px;
+	color: #333;
+	text-transform: uppercase;
+}
+
+.single h3.side-title:after {
+	content: '';
+	width: 60px;
+	height: 1px;
+	background: #ff173c;
+	display: block;
+	margin-top: 6px;
+}
+
+.single ul {
+	margin-bottom: 0;
+}
+
+.single li a {
+	color: #666;
+	font-size: 14px;
+	text-transform: uppercase;
+	border-bottom: 1px solid #f0f0f0;
+	line-height: 40px;
+	display: block;
+	text-decoration: none;
+}
+
+.single li a:hover {
+	color: #ff173c;
+}
+
+.single li:last-child a {
+	border-bottom: 0;
+}
+
+.right_area {
+	position: absolute;
+	left: 0px;
+	top: 25px;
+	right: 0;
+	min-width: 100%;
+	border-left: 1px solid #ddd;
+}
+
+.right_contents {
+	clear: both;
+	position: relative;
+	padding: 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.right_contents:after {
+	clear: both;
+	display: block;
+	content: "";
+}
+
+.title-page, .txt_selected_division, .font-mss {
+	font-family: "Open Sans", sans-serif !important;
+}
+
+.title-page {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 24px;
+	height: 17px;
+	line-height: 17px;
+	font-weight: normal;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+
+.cs_center_tap ul {
+	display: table;
+	width: 100%;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+.cs_center_tap ul li:first-child {
+	padding: 20px;
+	border-left: none;
+}
+
+.cs_center_tap ul li {
+	display: table-cell;
+	width: 33.3%;
+	margin: -1px 0 0 0;
+	border-bottom: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+.cs_center_tap ul li span.title {
+	margin-top: 0;
+	color: #000;
+	font-family: "Open Sans", sans-serif !important;
+	font-size: 18px;
+}
+
+.cs_center_tap ul li span {
+	display: block;
+	font-family: "Open Sans", "Open Sans", Arial, sans-serif;
+	color: #999;
+	margin-top: 5px;
+}
+
+.cs_center_tap ul li a {
+	display: block;
+	padding: 20px;
+}
+
+.cs_center_tap .active {
+	background: #f3f3f3 !important;
+}
+
+.faq_contents h3 {
+	padding-top: 6px;
+}
+
+.title-page, .txt_selected_division, .font-mss {
+	font-family: "Open Sans", sans-serif !important;
+}
+
+.title_cs {
+	font-size: 18px;
+	font-family: 'Open Sans';
+	color: #000;
+	display: inline-block;
+}
+
+.faq_search_txt {
+	padding: 8px;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+}
+
+.plain-btn.search_again_btn {
+	padding: 0;
+	font-size: 12px;
+	line-height: 12px;
+}
+
+.plain-btn {
+	background: #fff;
+	color: #000;
+}
+
+.plain-btn {
+	border: 1px solid #dddddd;
+	padding: 10px;
+	font-weight: bold;
+	line-height: 12px;
+	font-size: inherit;
+	text-align: center;
+}
+
+.btn {
+	display: inline-block;
+	*zoom: 1;
+	cursor: pointer;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	zoom: 1;
+	*display: inline;
+}
+
+.search_again_btn input[type="submit"] {
+	padding: 6px 7px 8px;
+	font-weight: bold;
+}
+
+.mypage_type {
+	display: table;
+	width: 100%;
+	min-width: 920px;
+	height: 32px;
+	margin-top: 20px;
+	*zoom: 1;
+	border: 1px solid #ddd;
+	border-left: none;
+	box-sizing: border-box;
+}
+
+.mypage_type li {
+	display: table-cell;
+	width: 9.09%;
+}
+
+.mypage_type .selected {
+	font-weight: bold;
+	background: #f3f3f3;
+}
+
+.mypage_type .selected a {
+	color: #000;
+}
+
+.mypage_type li a {
+	border-left: 1px solid #ddd;
+	box-sizing: border-box;
+}
+
+.mypage_type a {
+	display: block;
+	width: 100%;
+	height: 30px;
+	color: #b2b2b2;
+	text-align: center;
+	line-height: 30px;
+}
+
+.table_basic {
+	clear: both;
+	min-width: 920px;
+	width: 100%;
+	font-family: "Open Sans", Open Sans, Arial, sans-serif;
+	text-align: center;
+	background: #fff;
+}
+
+.table_faq_cs tr:first-child {
+	border-top: none;
+}
+
+.table_basic tr {
+	border: 1px solid #ddd;
+}
+
+.table_basic th {
+	vertical-align: middle;
+	padding: 10px 0;
+}
+
+.table_basic td {
+	line-height: 16.8px;
+	padding: 10px 0;
+}
+
+.table_faq_cs .txt_contents {
+	padding: 0;
+	text-align: left;
+}
+
+.table_basic td {
+	line-height: 16.8px;
+	padding: 10px 0;
+}
+
+.table_faq_cs .txt_contents a {
+	display: block;
+	padding: 10px 0;
+}

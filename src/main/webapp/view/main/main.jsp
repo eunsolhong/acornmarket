@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>도토리 마켓</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body>
     <!-- slider_area_start -->
@@ -14,28 +15,28 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5 col-md-6">
-                        <div class="slider_text">
+                        <div class="slider_text" style="position: absolute; top: 50%; transform: translateY(-50%);">
                             <h3>우리 동네 <br><span>중고 직거래</span> 마켓</h3>
                             <p>동네 주민들과 가깝고 따뜻한 거래를 지금 경험해보세요.</p>
                         </div>
                     </div>
+                    <div class="col-lg-2 col-md-6">
+                    </div>
+                    <div class="col-lg-5 col-md-6 fcan">
+                    	<canvas id="myChart1" width="400" height="250"></canvas>
+                    	<canvas id="myChart2" width="400" height="250"></canvas>
+                    </div>
                 </div>
             </div>
-            <!-- <div class="dog_thumb d-none d-lg-block">
-                <img src="img/다람쥐1.jpeg" alt="">
-            </div> -->
         </div>
     </div>
-    <!-- slider_area_end -->
-
-    <!-- service_area_start  -->
-<!--     <div class="service_area">
+    <div class="service_area">
         <div class="container">
             <div class="row justify-content-center ">
                 <div class="col-lg-7 col-md-10">
                     <div class="section_title text-center mb-95">
-                        <h3>Services for every dog</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+                        <h3>도토리 마켓은 이런점이 달라요.</h3>
+                        <p>동네 주민들과 가깝고 따듯한 거래를 지금 경험해보세요.</p>
                     </div>
                 </div>
             </div>
@@ -44,46 +45,51 @@
                     <div class="single_service">
                          <div class="service_thumb service_icon_bg_1 d-flex align-items-center justify-content-center">
                              <div class="service_icon">
-                                 <img src="img/service/service_icon_1.png" alt="">
+                                 <img src="img/service/acorn1.png" alt="">
                              </div>
                          </div>
                          <div class="service_content text-center">
-                            <h3>Pet Boarding</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</p>
+                            <h3>거래 장소 지정</h3>
+                            <p>거래할 장소를 직접 선택 가능해요.</p>
                          </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="single_service active">
-                         <div class="service_thumb service_icon_bg_1 d-flex align-items-center justify-content-center">
+                         <div class="service_thumb service_icon_bg_2 d-flex align-items-center justify-content-center">
                              <div class="service_icon">
-                                 <img src="img/service/service_icon_2.png" alt="">
+                                 <img src="img/service/acorn2.png" alt="">
                              </div>
                          </div>
                          <div class="service_content text-center">
-                            <h3>Healthy Meals</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</p>
+                            <h3>거래 매너 온도</h3>
+                            <p>거래 후 당신의 온도를 올려보세요.</p>
                          </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="single_service">
-                         <div class="service_thumb service_icon_bg_1 d-flex align-items-center justify-content-center">
+                         <div class="service_thumb service_icon_bg_3 d-flex align-items-center justify-content-center">
                              <div class="service_icon">
-                                 <img src="img/service/service_icon_3.png" alt="">
+                                 <img src="img/service/acorn3.png" alt="">
                              </div>
                          </div>
                          <div class="service_content text-center">
-                            <h3>Pet Spa</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</p>
+                            <h3>채팅하고 쪽지 보내기</h3>
+                            <p>채팅과 쪽지로 의사소통을 진행하세요.</p>
                          </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    service_area_end
-
+    
+    
+    
+    
+    
+    
+<!-- 
     pet_care_area_start 
     <div class="pet_care_area">
         <div class="container">
@@ -283,62 +289,51 @@
             </div>
         </div>
     </div>
-
-    footer_start 
+-->
     <footer class="footer">
         <div class="footer_top">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-3 col-md-6 col-lg-3">
+                    <div class="col-xl-4 col-md-8 col-lg-4">
                         <div class="footer_widget">
-                            <h3 class="footer_title">
-                                Contact Us
-                            </h3>
+                            <h3 class="footer_title">Introduction</h3>
                             <ul class="address_line">
-                                <li>+555 0000 565</li>
-                                <li><a href="#">Demomail@gmail.Com</a></li>
-                                <li>700, Green Lane, New York, USA</li>
+                                <li>+880 4664 216</li>
+                                <li><a href="#"></a></li>
+                                <li>132, Teheran-ro, Gangnam-gu, Seoul, Republic of Korea</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-3  col-md-6 col-lg-3">
+                    <div class="col-xl-4  col-md-8 col-lg-4">
                         <div class="footer_widget">
-                            <h3 class="footer_title">
-                                Our Servces
-                            </h3>
+                            <h3 class="footer_title">Service</h3>
                             <ul class="links">
-                                <li><a href="#">Pet Insurance</a></li>
-                                <li><a href="#">Pet surgeries </a></li>
-                                <li><a href="#">Pet Adoption</a></li>
-                                <li><a href="#">Dog Insurance</a></li>
-                                <li><a href="#">Dog Insurance</a></li>
+                                <li><a href="#" onclick="return false;">거래 온도</a></li>
+                                <li><a href="#" onclick="return false;">거래 게시판</a></li>
+                                <li><a href="#" onclick="return false;">거래 장소 설정</a></li>
+                                <li><a href="#" onclick="return false;">쪽지 채팅</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-3  col-md-6 col-lg-3">
+                    <div class="col-xl-4  col-md-8 col-lg-4">
                         <div class="footer_widget">
-                            <h3 class="footer_title">
-                                Quick Link
-                            </h3>
+                            <h3 class="footer_title">Project Member</h3>
                             <ul class="links">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Terms of Service</a></li>
-                                <li><a href="#">Login info</a></li>
-                                <li><a href="#">Knowledge Base</a></li>
+                                <li><a href="#" onclick="return false;">Song Jinhoon</a></li>
+                                <li><a href="#" onclick="return false;">Kim Sunho</a></li>
+                                <li><a href="#" onclick="return false;">Kim Ensole</a></li>
+                                <li><a href="#" onclick="return false;">Kim Yurim</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6 col-lg-3 ">
+<!--                     <div class="col-xl-3 col-md-6 col-lg-3 ">
                         <div class="footer_widget">
                             <div class="footer_logo">
                                 <a href="#">
                                     <img src="img/logo.png" alt="">
                                 </a>
                             </div>
-                            <p class="address_text">239 E 5th St, New York 
-                                NY 10003, USA
-                            </p>
+                           	<p class="address_text">Spring MVC Project Market Site</p>
                             <div class="socail_links">
                                 <ul>
                                     <li>
@@ -363,9 +358,8 @@
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -375,16 +369,13 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <p class="copy_right text-center">
-                            <p>Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.</p>
+                        	동네 주민들과 함께 하는 사이트 도토리 마켓
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-    footer_end  -->
 
 
     <!-- JS here -->
@@ -413,9 +404,116 @@
     <script src="${pageContext.request.contextPath}/js/jquery.form.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/mail-script.js"></script>
-
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
     <script>
+    	var webNote;
+    	console.log(webNote);
+        
+    	$(document).ready(function(){
+
+ 			$.ajax({
+	            url: "http://localhost:8080${pageContext.request.contextPath}/main/chart1",
+	            type: "GET",
+	            success: function(user){
+	            	/* chart1 정의 */            	
+	            	var ctx = document.getElementById('myChart1');
+					var myChart = new Chart(ctx, {
+					    type: 'bar',
+					    data: {
+					        labels: [user[0].userid, user[1].userid,'Yellow', 'Green', 'Purple', 'Orange'],
+					        datasets: [{
+					            label: '도토리인 Top 6',
+					            data: [user[0].userscore, user[1].userscore, 3, 5, 2, 3],
+					            backgroundColor: [
+					                'rgba(255, 99, 132, 0.2)',
+					                'rgba(54, 162, 235, 0.2)',
+					                'rgba(255, 206, 86, 0.2)',
+					                'rgba(75, 192, 192, 0.2)',
+					                'rgba(153, 102, 255, 0.2)',
+					                'rgba(255, 159, 64, 0.2)'
+					            ],
+					            borderColor: [
+					                'rgba(255, 99, 132, 1)',
+					                'rgba(54, 162, 235, 1)',
+					                'rgba(255, 206, 86, 1)',
+					                'rgba(75, 192, 192, 1)',
+					                'rgba(153, 102, 255, 1)',
+					                'rgba(255, 159, 64, 1)'
+					            ],
+					            borderWidth: 1
+					        }]
+					    },
+					    options: {
+					        scales: {
+					            yAxes: [{
+					                ticks: {
+					                    beginAtZero: true
+					                }
+					            }]
+					        }
+					    }
+					});
+	    
+	            },
+	            
+	            error: function(){
+	                alert("serialize err");
+	            }
+	        });
+ 			
+ 			$.ajax({
+	            url: "http://localhost:8080${pageContext.request.contextPath}/main/chart2",
+	            type: "GET",
+	            success: function(data){
+	            	alert(data);
+	            	/* chart2 정의 */          
+	        		var ctx = document.getElementById('myChart2');
+	        		var myChart = new Chart(ctx, {
+	        		    type: 'pie',
+	        		    data: {
+	        		        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+	        		        datasets: [{
+	        		            label: '# of Votes',
+	        		            data: [12, 19, 3, 5, 2, 3],
+	        		            backgroundColor: [
+	        		                'rgba(255, 99, 132, 0.2)',
+	        		                'rgba(54, 162, 235, 0.2)',
+	        		                'rgba(255, 206, 86, 0.2)',
+	        		                'rgba(75, 192, 192, 0.2)',
+	        		                'rgba(153, 102, 255, 0.2)',
+	        		                'rgba(255, 159, 64, 0.2)'
+	        		            ],
+	        		            borderColor: [
+	        		                'rgba(255, 99, 132, 1)',
+	        		                'rgba(54, 162, 235, 1)',
+	        		                'rgba(255, 206, 86, 1)',
+	        		                'rgba(75, 192, 192, 1)',
+	        		                'rgba(153, 102, 255, 1)',
+	        		                'rgba(255, 159, 64, 1)'
+	        		            ],
+	        		            borderWidth: 1
+	        		        }]
+	        		    },
+	        		    options: {
+	        		        scales: {
+	        		            yAxes: [{
+	        		                ticks: {
+	        		                    beginAtZero: true
+	        		                }
+	        		            }]
+	        		        }
+	        		    }
+	        		});
+	            },
+	            
+	            error: function(){
+	                alert("serialize err");
+	            }
+	        });
+    	})
+    
+    
+    
         $('#datepicker').datepicker({
             iconsLibrary: 'fontawesome',
             disableDaysOfWeek: [0, 0],
@@ -423,6 +521,7 @@
         //      rightIcon: '<span class="fa fa-caret-down"></span>'
         //  }
         });
+        
         $('#datepicker2').datepicker({
             iconsLibrary: 'fontawesome',
             icons: {
@@ -431,8 +530,9 @@
 
         });
         var timepicker = $('#timepicker').timepicker({
-         format: 'HH.MM'
-     });
+        	format: 'HH.MM'
+     	});
+        
     </script>
 </body>
 </html>

@@ -68,19 +68,29 @@
 				<table style="color: white;">
 					<tr>
 						<td><p style="color: black;">안녕하세요.<br>추가적으로 아래에 정보를 입력하시고 회원가입을 완료하세요.</p></td>
-						<td><input type="hidden" name="userId" value="${userId}"></td>
-						<td><input type="hidden" name="userName" value="${userName}"></td>
+						<c:if test="${userId ne 'emailerror'}">
+							<td><input type="hidden" name="userid" value="${userId}"></td>						
+						</c:if>
+						<td><input type="hidden" name="username" value="${userName}"></td>
 					</tr>
+					<c:if test="${userId eq 'emailerror'}">
+						<tr>
+							<td>
+								<label>ID</label>
+								<input class="w3-input w3-round w3-border" size="15" type="text" name="userid" placeholder="카카오톡 계정과 동일하게 입력하세요.">
+							</td>
+						</tr>
+					</c:if>
 					<tr>
 						<td>
 							<label>Password</label> 
-							<input class="w3-input w3-round w3-border" size="15" type="password" name="userPasswd">
+							<input class="w3-input w3-round w3-border" size="15" type="password" name="userpasswd">
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<label>Email</label> 
-							<input class="w3-input w3-round w3-border" size="25" type="text" name="userEmail">
+							<input class="w3-input w3-round w3-border" size="25" type="text" name="useremail">
 						</td>
 					</tr>
 					<tr>

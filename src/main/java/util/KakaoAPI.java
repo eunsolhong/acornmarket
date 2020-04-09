@@ -47,6 +47,10 @@ public class KakaoAPI {
 	        
 	        int responseCode = conn.getResponseCode();
 	        System.out.println("responseCode : " + responseCode);
+	        if(responseCode == 400){
+	        	
+	        	return "error";
+	        }
 	 
 	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	        String line = "";
@@ -76,8 +80,8 @@ public class KakaoAPI {
 	    return access_Token;
 	}
     
-    public HashMap<String, Object> getUserInfo (String access_Token) {
-        HashMap<String, Object> userInfo = new HashMap<>();
+    public HashMap<String, String> getUserInfo (String access_Token) {
+        HashMap<String, String> userInfo = new HashMap<>();
         String reqURL = "https://kapi.kakao.com/v2/user/me";
         try {
             URL url = new URL(reqURL);
@@ -104,28 +108,35 @@ public class KakaoAPI {
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
             
-            String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-            String email = kakao_account.getAsJsonObject().get("email").getAsString();
+            String userName = properties.getAsJsonObject().get("nickname").getAsString();
+            userInfo.put("userName", userName);
+            String userId = kakao_account.getAsJsonObject().get("email").getAsString();
+            userInfo.put("userId", userId);
             
-            userInfo.put("nickname", nickname);
-            userInfo.put("email", email);
-            
-        } catch (IOException e) {
+        } catch (NullPointerException e) {
+			e.printStackTrace();
+			System.out.println("-카카오 이메일 선택적 동의 거부-");
+			userInfo.put("userId", "emailerror");
+			return userInfo;
+			
+		} catch (IOException e) {
             e.printStackTrace();
         }
         
         return userInfo;
     }
     
-    public void kakaoLogout(String access_Token) {
-        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+    // 카카오 연결 끊기
+    public int kakaoLogout(String access_Token) {
+        String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+        int responseCode = 0;
         try {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization", "Bearer " + access_Token);
             
-            int responseCode = conn.getResponseCode();
+            responseCode = conn.getResponseCode();
             System.out.println("responseCode : " + responseCode);
             
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -137,9 +148,11 @@ public class KakaoAPI {
                 result += line;
             }
             System.out.println(result);
+            
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+		return responseCode;
     }
 }

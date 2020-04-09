@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h1>정보 제공 동의에 실패했습니다.</h1>
+	<h1>다시 해주세요.</h1>
 </body>
 </html>

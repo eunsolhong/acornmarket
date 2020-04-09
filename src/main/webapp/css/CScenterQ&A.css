@@ -1,0 +1,500 @@
+@CHARSET "UTF-8";
+
+.single {
+	width: 80%;
+	padding: 30px 15px;
+	/* margin-top: 40px; */
+	background: #fcfcfc;
+	border: 1px solid #f0f0f0;
+}
+
+.single h3.side-title {
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 0;
+	font-size: 20px;
+	color: #333;
+	text-transform: uppercase;
+}
+
+.single h3.side-title:after {
+	content: '';
+	width: 60px;
+	height: 1px;
+	background: #ff173c;
+	display: block;
+	margin-top: 6px;
+}
+
+.single ul {
+	margin-bottom: 0;
+}
+
+.single li a {
+	color: #666;
+	font-size: 14px;
+	text-transform: uppercase;
+	border-bottom: 1px solid #f0f0f0;
+	line-height: 40px;
+	display: block;
+	text-decoration: none;
+}
+
+.single li a:hover {
+	color: #ff173c;
+}
+
+.single li:last-child a {
+	border-bottom: 0;
+}
+
+.right_area {
+	position: absolute;
+	left: 0px;
+	top: 25px;
+	right: 0;
+	min-width: 100%;
+	border-left: 1px solid #ddd;
+}
+
+.right_contents {
+	clear: both;
+	position: relative;
+	padding: 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.title-page {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 24px;
+	height: 17px;
+	line-height: 17px;
+	font-weight: normal;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+
+.right_contents:after {
+	clear: both;
+	display: block;
+	content: "";
+}
+
+.cs_center_tap ul {
+	display: table;
+	width: 100%;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+.cs_center_tap ul li:first-child {
+	padding: 20px;
+	border-left: none;
+}
+
+.cs_center_tap ul li {
+	display: table-cell;
+	width: 33.3%;
+	margin: -1px 0 0 0;
+	border-bottom: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+.cs_center_tap ul li span.title {
+	margin-top: 0;
+	color: #000;
+	font-family: "Open Sans", sans-serif !important;
+	font-size: 18px;
+}
+
+.cs_center_tap ul li span {
+	display: block;
+	font-family: "Open Sans", "Open Sans", Arial, sans-serif;
+	color: #999;
+	margin-top: 5px;
+}
+
+.cs_center_tap .active {
+	background: #f3f3f3 !important;
+}
+
+.cs_center_tap ul li a {
+	display: block;
+	padding: 20px;
+}
+
+.title_cs {
+	font-size: 18px;
+	font-family: 'Open Sans';
+	color: #000;
+	display: inline-block;
+}
+
+.n-info-txt {
+	font-family: 'Open Sans', 'Apple SD Gothic', Auto, sans-serif;
+	line-height: 1.5;
+	font-size: 14px;
+	padding-top: 20px;
+}
+
+.container-cs-counsel .n-info-txt>li.txt-danger {
+	color: #f00;
+}
+
+.n-info-txt>li {
+	color: #777777;
+	padding-left: 14px;
+	position: relative;
+}
+
+.n-info-txt>li:before {
+	content: "-";
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.n-info-txt a.n-txt-link {
+	text-decoration: underline;
+}
+
+.container-cs-counsel .harf_area:first-child {
+	padding-left: 0;
+	padding-right: 20px;
+}
+
+.harf_area {
+	display: table-cell;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+.container-cs-counsel .harf_area .n-section-title {
+	padding-bottom: 10px;
+	border-bottom-width: 1px;
+}
+
+.n-section-title {
+	border-bottom: 3px solid #000000;
+	padding-bottom: 14px;
+	margin-top: 48px;
+	font-family: 'Open Sans', 'Apple SD Gothic', Auto, sans-serif;
+	line-height: 1.5;
+	font-size: 14px;
+	position: relative;
+}
+
+.container-cs-counsel .harf_area .n-section-title .tit {
+	font-size: 18px;
+	line-height: 24px;
+}
+
+.n-section-title .tit {
+	display: inline-block;
+	font-size: 24px;
+	font-family: 'Open Sans', sans-serif !important;
+}
+
+.container-cs-counsel .n-table {
+	border-bottom: 1px solid #f1f1f1;
+}
+
+.n-table {
+	width: 100%;
+	font-family: 'Open Sans', 'Apple SD Gothic', Auto, sans-serif;
+	line-height: 1.5;
+	font-size: 14px;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+.n-table.table-row tr:first-child th, .n-table.table-row tr:first-child td
+	{
+	border-top: none;
+}
+
+.container-cs-counsel .n-table th {
+	width: 170px;
+	padding-right: 20px;
+}
+
+.n-table.table-row th {
+	text-align: left;
+	font-weight: normal;
+	vertical-align: top;
+}
+
+.n-table.table-row th, .n-table.table-row td {
+	height: auto;
+	padding: 15px 0;
+	box-sizing: border-box;
+	border-top: 1px solid #f1f1f1;
+	border-bottom: none;
+	font-size: 14px;
+	text-align: left;
+}
+
+.n-table.table-row td {
+	vertical-align: middle;
+}
+
+.container-cs-counsel .n-table .bg-select {
+	display: block;
+	width: 100%;
+	height: 30px;
+	margin: -5px 0;
+	background: url(/skin/musinsa/images/btn-general-open.png) no-repeat;
+	background-position: right 5px top 4px;
+	background-size: 22px;
+	overflow: hidden;
+}
+
+.container-cs-counsel .n-table .bg-select select {
+	width: 100%;
+	height: 30px;
+	padding: 0 30px 0 10px;
+	background: none;
+	border-color: #e5e5e5;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	appearance: none;
+	-webkit-appearance: none;
+	font-size: 14px;
+	line-height: 20px;
+	font-family: 'Open Sans', 'Apple SD Gothic', Auto, sans-serif !important;
+}
+
+.container-cs-counsel .n-table .n-select, .container-cs-counsel .n-table .n-input,
+	.container-cs-counsel .n-table textarea.n-input {
+	width: 100%;
+	margin: -5px 0;
+}
+
+.n-input {
+	height: 32px;
+	padding: 5px 6px;
+	border: 1px solid #e5e5e5;
+	background-color: #ffffff;
+	box-sizing: border-box;
+	font-family: 'Open Sans', 'Apple SD Gothic', Auto, sans-serif !important;
+	font-size: 14px;
+	line-height: 20px;
+	-webkit-transition: border 0.2s ease-in-out;
+	-moz-transition: border 0.2s ease-in-out;
+	-o-transition: border 0.2s ease-in-out;
+	transition: border 0.2s ease-in-out;
+}
+
+.container-cs-counsel .n-table .n-same-row th, .container-cs-counsel .n-table .n-same-row td
+	{
+	padding-top: 5px;
+	border-top: none;
+}
+
+.n-table.table-row textarea.n-input {
+	display: block;
+	height: 180px;
+	margin: 0;
+}
+
+.container-cs-counsel .n-table td.file-upload {
+	padding: 0 0 5px;
+}
+
+.container-cs-counsel .n-table .btn-file {
+	width: 65px;
+	height: 65px;
+	margin: 0 5px 5px 0;
+	background-image: url(/skin/musinsa/images/bg_upload.png);
+	background-repeat: no-repeat;
+	border: none;
+	font-size: 0;
+	line-height: 0;
+}
+
+.container-cs-counsel .n-table button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.n-table a, .n-table button {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.n-table button {
+	font-family: inherit;
+	display: inline-block;
+}
+
+.harf_area:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+#faq_list.harf_area {
+	width: 50%;
+}
+
+.container-cs-counsel .harf_area {
+	padding-left: 20px;
+}
+
+.box_faq_list {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.container-cs-counsel .box_faq_list .txt_type {
+	display: inline-block;
+	padding-top: 2px;
+	vertical-align: bottom;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.title-page, .txt_selected_division, .font-mss {
+	font-family: "Open Sans", sans-serif !important;
+}
+
+.container-cs-counsel .box_faq_list .n-link {
+	bottom: 11px;
+	padding-top: 2px;
+	color: #000;
+	text-decoration: none;
+}
+
+.n-section-title .n-link {
+	position: absolute;
+	right: 0;
+	bottom: 20px;
+}
+
+.container-cs-counsel .cs-faq-list dl {
+	padding: 16px 0;
+	cursor: pointer;
+}
+
+.container-cs-counsel .cs-faq-list dt {
+	float: left;
+}
+
+.container-cs-counsel .cs-faq-list dt:before {
+	margin-right: 5px;
+	color: #0078ff;
+	font-size: 16px;
+	content: "Q";
+}
+
+.container-cs-counsel .cs-faq-list dd {
+	padding-left: 70px;
+}
+
+.container-cs-counsel .cs-faq-list .answer {
+	padding: 16px 10px 16px 70px;
+	background: #f7f7f7;
+	border-top: 1px solid #f1f1f1;
+}
+
+.n-btn-group {
+	min-height: 32px;
+	text-align: center;
+	padding-top: 20px;
+	clear: both;
+	position: relative;
+}
+
+.n-btn-group
+>
+.n-btn
+
+
+
+
+:not
+
+
+ 
+
+
+(
+.btn-sm
+
+
+ 
+
+
+)
+{
+margin
+
+
+
+
+:
+
+
+ 
+
+
+0
+1
+px
+
+
+
+
+;
+}
+.n-btn.btn-lighter {
+	border: 1px solid #f1f1f1;
+	background-color: #f1f1f1;
+	color: #000000;
+}
+
+.n-btn {
+	display: inline-block;
+	min-width: 100px;
+	height: 40px;
+	line-height: 36px;
+	color: #ffffff;
+	box-sizing: border-box;
+	padding: 2px 8px 0 8px;
+	font-size: 14px;
+	text-align: center;
+	cursor: pointer;
+	vertical-align: middle;
+	-webkit-transition: border 0.2s, background 0.2s ease-in-out;
+	-moz-transition: border 0.2s, background 0.2s ease-in-out;
+	-o-transition: border 0.2s, background 0.2s ease-in-out;
+	transition: border 0.2s, background 0.2s ease-in-out;
+}
+
+.font-mss, .n-btn, .img-block .n-state, .n-label .rank {
+	font-family: 'Open Sans', sans-serif !important;
+}
+
+.n-btn.btn-accent {
+	border: 1px solid #000000;
+	background-color: #000000;
+}
+
+.n-btn-group:after {
+	content: "";
+	display: block;
+	clear: both;
+}

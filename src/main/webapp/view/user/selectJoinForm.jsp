@@ -4,14 +4,14 @@
 <head>
 	<title>Insert title here</title>
 	<style>
-		.jumbotron {
+		.ww {
 			border: solid 10px #745d46; 
 			background-color: #ffffff;
 		}
 		p { 
 			color: black; 
 			font-size: 20px;
-			 font-weight: bold; 
+			font-weight: bold; 
 		}
 		.normal {
 			text-align: center;
@@ -22,7 +22,7 @@
 		}
 		.normal:hover { cursor: pointer; }
 		.normal span { color: #ffffff; }
-		.row { padding: 10px 0; }
+		.gg { padding: 10px 0; }
 		.kakao, .naver { padding: 0; }
 		.naver img { width: 100%; height: 60px; }
 		.kakao img { width: 100%; height: 60px; }
@@ -30,18 +30,18 @@
 </head>
 <body>
 <p><br><p><br>
-	<div class="row">
+	<div class="row gg">
 		<div class="col-lg-4"></div>
-		<div class="col-lg-4 jumbotron">
+		<div class="col-lg-4 jumbotron ww">
 			<p class="text-center">SELECT JOIN TYPE</p>
-			<div class="row section">
+			<div class="row section gg">
 				<div class="col-lg-3"></div>
 				<div class="col-lg-6 normal" onclick="location.href='${pageContext.request.contextPath}/user/joinForm'">
 					<span>일반 회원 가입</span>
 				</div>
 				<div class="col-lg-3"></div>
-			</div>
-			<div class="row section">
+			</div> 
+			<div class="row section gg">
 				<div class="col-lg-3"></div>
 				<div class="col-lg-6 kakao">
 					<a href="${kakaoApiUrl}">
@@ -50,7 +50,7 @@
 				</div>
 				<div class="col-lg-3"></div>
 			</div>
-			<div class="row section">
+			<div class="row section gg">
 				<div class="col-lg-3"></div>
 				<div class="col-lg-6 naver">
 		       		<a href="${naverApiUrl}">

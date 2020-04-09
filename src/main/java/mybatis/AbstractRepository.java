@@ -36,6 +36,5 @@ public abstract class AbstractRepository {
 	
 	public void setDbname(String dbname) {
 		resource =  "mybatis/mybatis-config" + dbname + ".xml";
-		System.out.println(resource);
 	}
 }
