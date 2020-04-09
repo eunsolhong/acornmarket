@@ -17,13 +17,14 @@ import com.google.gson.JsonParser;
 public class NaverAPI {
 	private static String clientId = "yPQYyVMFjdlHoblG9T46";
 	private static String clientSecret = "39GpBX6pCz"; 
+	private static String redirectURI = "http://localhost:8080/zSpringProject/user/naverLoginForm";
 	
 	public static String getApiUrl() {
 //		네이버 아이디로 로그인 인증 요청
 		String apiUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
 	    String redirectUri;
 		try {
-			redirectUri = URLEncoder.encode("http://localhost:8080/zSpringProject/user/naverLoginForm", "UTF-8");
+			redirectUri = URLEncoder.encode(redirectURI, "UTF-8");
 		    SecureRandom random = new SecureRandom();
 		    String state = new BigInteger(130, random).toString();
 		    apiUrl += "&client_id=" + clientId;
@@ -71,12 +72,12 @@ public class NaverAPI {
     public String getAccessToken (String param1, String param2) throws Exception {
 		String code = param1;
 		String state = param2;
-		String redirectURI = URLEncoder.encode("http://localhost:8080/zSpringProject/user/naverLoginForm","UTF-8");
+		String redirectUri = URLEncoder.encode(redirectURI,"UTF-8");
 	    String apiUrl;
 	    apiUrl = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 	    apiUrl += "client_id=" + clientId;
 	    apiUrl += "&client_secret=" + clientSecret;
-	    apiUrl += "&redirect_uri=" + redirectURI;
+	    apiUrl += "&redirect_uri=" + redirectUri;
 	    apiUrl += "&code=" + code;
 	    apiUrl += "&state=" + state;
 		String access_token = ""; // 접근 토큰
@@ -84,8 +85,8 @@ public class NaverAPI {
 		
 		JsonObject jsonObj = getJsonObject(apiUrl);
 		if(jsonObj != null){
-	        access_token = jsonObj.getAsJsonObject().get("access_token").getAsString();
-	        refresh_token = jsonObj.getAsJsonObject().get("refresh_token").getAsString();
+			access_token = jsonObj.getAsJsonObject().get("access_token").getAsString();
+			refresh_token = jsonObj.getAsJsonObject().get("refresh_token").getAsString();
 		}
 		return access_token;
 	}
@@ -108,47 +109,63 @@ public class NaverAPI {
 		return result;
     }
     
-    public HashMap<String, String> getUserInfo (String access_Token) {
+    public HashMap<String, String> getUserInfo (String access_Token) throws Exception {
     	HashMap<String, String> userInfo = new HashMap<>();
         String header = "Bearer " + access_Token;
         String apiURL = "https://openapi.naver.com/v1/nid/me";
-        try {
-        	URL url = new URL(apiURL);
-        	HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        	conn.setRequestMethod("GET");
-        	conn.setRequestProperty("Authorization", header);
-        	int responseCode = conn.getResponseCode();
-        	BufferedReader br;
-        	if(responseCode == 200) {
-        		br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        	}else {
-        		br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        	}
-        	String inputLine;
-			StringBuffer res = new StringBuffer();
-			while ((inputLine = br.readLine()) != null) {
-				res.append(inputLine);
-			}
-			br.close();
-			JsonParser parsing = new JsonParser();
-			Object obj = parsing.parse(res.toString());
-			JsonObject jsonObj = (JsonObject) obj;
-			JsonObject resObj = (JsonObject) jsonObj.get("response");
-			
-			String email = resObj.getAsJsonObject().get("email").getAsString();
-			String name = resObj.getAsJsonObject().get("name").getAsString();
-//			체크
-			System.out.println(email);
-			System.out.println(name);
-			
-			userInfo.put("userId", email);
-			userInfo.put("userName", name);
-			
-        }catch (Exception e) {
-			e.printStackTrace();
+        
+    	URL url = new URL(apiURL);
+    	HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    	conn.setRequestMethod("GET");
+    	conn.setRequestProperty("Authorization", header);
+    	int responseCode = conn.getResponseCode();
+    	BufferedReader br;
+    	if(responseCode == 200) {
+    		br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+    	}else {
+    		br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+    	}
+    	String inputLine;
+		StringBuffer res = new StringBuffer();
+		while ((inputLine = br.readLine()) != null) {
+			res.append(inputLine);
 		}
+		br.close();
+		JsonParser parsing = new JsonParser();
+		Object obj = parsing.parse(res.toString());
+		JsonObject jsonObj = (JsonObject) obj;
+		JsonObject resObj = (JsonObject) jsonObj.get("response");
+		
+		String email = resObj.getAsJsonObject().get("email").getAsString();
+		String name = resObj.getAsJsonObject().get("name").getAsString();
+		
+		System.out.println(email);
+		System.out.println(name);
+		
+		userInfo.put("userId", email);
+		userInfo.put("userName", name);
+			
         
         return userInfo;
+    }
+    
+    public String reAuthorize(String param1) throws Exception{
+	    String apiUrl;
+	    String redirectUri = URLEncoder.encode(redirectURI,"UTF-8");
+	    String state = URLEncoder.encode(param1,"UTF-8");
+	    apiUrl = "https://nid.naver.com/oauth2.0/authorize?";
+	    apiUrl += "response_type=" + "code";
+	    apiUrl += "&client_id=" + clientId;
+	    apiUrl += "&redirect_uri=" + redirectUri;
+	    apiUrl += "&state=" + state;
+	    apiUrl += "&auth_type=" + "reprompt";
+	    
+	    return apiUrl;
+/*	    URL url = new URL(apiUrl);
+		HttpURLConnection con = (HttpURLConnection)url.openConnection();
+		con.setRequestMethod("GET");
+		int responseCode = con.getResponseCode();
+		return responseCode;*/
     }
 
 }

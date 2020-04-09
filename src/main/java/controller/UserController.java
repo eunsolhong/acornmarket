@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Address;
@@ -20,9 +21,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import model.User;
 import repository.MybatisUserDao;
@@ -35,8 +38,22 @@ import util.SHA256;
 @RequestMapping("/user/")
 public class UserController {
 
+	HttpSession session;
+	String userId;
+	int emailCheck = 0;
+
 	@Autowired
 	MybatisUserDao service;
+
+	@ModelAttribute // 메소드를 실행할 때 마다 매번 실행된다.
+	public void initProcess(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("------------------");
+
+		HttpSession session = request.getSession();
+		userId = (String) session.getAttribute("userId");
+		System.out.println("User----------" + userId);
+
+	}
 
 	@RequestMapping(value = "selectJoinForm", method = RequestMethod.GET)
 	public String selectJoinForm(HttpServletRequest request) throws Exception {
@@ -56,48 +73,107 @@ public class UserController {
 		if (code != null) {
 			KakaoAPI kakao = new KakaoAPI();
 			String access_Token = kakao.getAccessToken(code);
-			HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
-			if (userInfo.get("nickname") != null) {
-				request.setAttribute("userId", userInfo.get("email"));
-				request.setAttribute("userName", userInfo.get("nickname"));
-				// 여기서 디비를 통해 id체크
-			}
-		}
 
-		return "user/apiLoginForm";
+			if(access_Token.equals("error")){
+				System.out.println("- 카카오 토큰 받기 에러 -");
+				
+				return "redirect:/main/main";
+			}
+			HashMap<String, String> userInfo = kakao.getUserInfo(access_Token);
+			System.out.println(userInfo);
+			System.out.println("userId: " + userInfo.get("userId"));
+			System.out.println("userName: " + userInfo.get("userName"));
+			// 토큰 삭제
+			int result = kakao.kakaoLogout(access_Token);
+			if(result == 200){
+				System.out.println("-카카오 연결 끊기 성공-");
+			}else{
+				System.out.println("-카카오 연결 끊기 실패-");
+			}
+			// 여기서 디비를 통해 ID체크
+			int check = service.getUserIdCheck(userInfo.get("userId"));
+			// 기존 아이디가 존재하지않는다면
+			if (check == 0) {
+				request.setAttribute("userId", userInfo.get("userId"));
+				request.setAttribute("userName", userInfo.get("userName"));
+				
+				return "user/apiLoginForm";
+			} else {
+				return "user/overlapJoinForm";
+			}	
+		}else{
+			System.out.println("- 토큰 오류가 발생했습니다 -");
+			
+			return "redirect:/main/main";
+		}
 	}
 
 	@RequestMapping(value = "naverLoginForm", method = RequestMethod.GET)
 	public String naverLoginForm(HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
 		NaverAPI naverAPI = new NaverAPI();
 		String code = request.getParameter("code");
 		String state = request.getParameter("state");
 		String error = request.getParameter("error");
 		String error_description = request.getParameter("error_description");
+		String access_token;
+		HashMap<String, String> userInfo;
 //		네이버 로그인 정보와 정보제공 동의 과정 완료 및 실패
 		if (code != null && state != null) {
-			String access_token = naverAPI.getAccessToken(code, state);
-			HashMap<String, String> userInfo = naverAPI.getUserInfo(access_token);
-			request.setAttribute("userId", userInfo.get("userId"));
-			request.setAttribute("userName", userInfo.get("userName"));
-//			토큰 삭제
-			String result = naverAPI.deleteAccessToken(access_token);
-			if (result.equals("success")) {
-				System.out.println("- 토큰 삭제 성공 -");
-			} else {
-				System.out.println("- 토큰 삭제 실패 -");
-			}
-//			여기서 디비를 통해 ID체크하고 기존에 가입을 했었던 사람이라면 메인으로 보내주고 아니면 apiloginform ㅇㅋ?
-
-			System.out.println("userId: " + userInfo.get("userId"));
-			System.out.println("userName: " + userInfo.get("userName"));
-			int check = service.getUserIdCheck(userInfo.get("userId"));
-//			기존 아이디가 존재하지않는다면
-			if (check == 0) {
-				return "user/apiLoginForm";
-			} else {
+			try{
+				access_token = naverAPI.getAccessToken(code, state);
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("-토큰 절차 에러-");
+				
 				return "redirect:/main/main";
 			}
+			try{
+				userInfo = naverAPI.getUserInfo(access_token);
+				// 토큰 삭제
+				String result = naverAPI.deleteAccessToken(access_token);
+				if (result.equals("success")) {
+					System.out.println("- 네이버 토큰 삭제 성공 -");
+				} else {
+					System.out.println("- 네이버 토큰 삭제 실패 -");
+				}
+				// 여기서 디비를 통해 ID체크
+				int check = service.getUserIdCheck(userInfo.get("userId"));
+				// 기존 아이디가 존재하지않는다면
+				if (check == 0) {
+					request.setAttribute("userId", userInfo.get("userId"));
+					request.setAttribute("userName", userInfo.get("userName"));
+					
+					return "user/apiLoginForm";
+				} else {
+					return "user/overlapJoinForm";
+				}			
+			}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("-정보 제공 동의 에러-");
+				
+				String reAtr = naverAPI.reAuthorize(state);
+				if(session.getAttribute(access_token) == null){
+					session.setAttribute(access_token, 1);
+					System.out.println("session값 체크: " + session.getAttribute(access_token));
+					
+					return "redirect:" + reAtr;
+				}else{
+					if(session.getAttribute(access_token).toString().equals("3") ){
+						System.out.println("session값 체크: " + session.getAttribute(access_token));
+						session.removeAttribute(access_token);
+						
+						return "user/naverLoginForm";
+					}else{
+						int count = ((int) session.getAttribute(access_token)) + 1;
+						session.setAttribute(access_token, count);
+						System.out.println("session값 체크: " + session.getAttribute(access_token));
+						
+						return "redirect:" + reAtr;
+					}
+				}
+			}
+
 		} else {
 			System.out.println("네이버 아이디 로그인 인증 실패");
 			System.out.println("에러코드: " + error);
@@ -110,19 +186,8 @@ public class UserController {
 	// 로그인 폼
 	@RequestMapping(value = "loginForm", method = RequestMethod.GET)
 	public String loginForm(HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-		if (userId != null) {
-			int emailCheck = (int) session.getAttribute("emailCheck");
-			System.out.println("emailCheck : " + emailCheck);
-		}
-
 		System.out.println("userID : " + userId);
 
-		String naverApiUrl = NaverAPI.getApiUrl();
-		String kakaoApiUrl = KakaoAPI.getApiUrl();
-		request.setAttribute("naverApiUrl", naverApiUrl);
-		request.setAttribute("kakaoApiUrl", kakaoApiUrl);
 		return "user/loginForm";
 	}
 
@@ -134,11 +199,10 @@ public class UserController {
 		request.setCharacterEncoding("utf-8");
 
 		User user = new User();
-		HttpSession session = request.getSession();
-		String userId = request.getParameter("userId");
+		session = request.getSession();
+		userId = request.getParameter("userId");
 
 		String userPasswd = request.getParameter("userPasswd");
-		int emailCheck = 0;
 
 		user.setUserid(userId);
 		user.setUserpasswd(userPasswd);
@@ -209,7 +273,7 @@ public class UserController {
 		System.out.println(userEmailHash);
 		System.out.println("-------------------------------");
 		System.out.println(user);
-
+		
 		service.joinUser(user);
 		session.setAttribute("userId", user.getUserid());
 
@@ -257,7 +321,7 @@ public class UserController {
 			return "redirect:/main/main";
 		} else if (emailChecked == 0) {
 			// 사용자에게 보낼 이메일 내용을 입력
-			String host = "http://localhost:8080/zSpringProject/user/";
+			String host = "http://localhost:9080/zSpringProject/user/";
 			String from = "oakNutSpring@gmail.com";
 			String to = service.getUserEmail(userId);
 
@@ -315,7 +379,7 @@ public class UserController {
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
 
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		String code = request.getParameter("code");
 
 		String userId = null;
@@ -382,20 +446,84 @@ public class UserController {
 	@RequestMapping(value = "myPage", method = RequestMethod.GET)
 	public String myPage(HttpServletRequest request) throws Exception {
 
-		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
-
 		int userScore = service.getUserScore(userId);
-		request.setAttribute("userScore", userScore);
+		String useraddress = service.getUserAddress(userId);
 
-		return "user/myPage";
+		System.out.println(useraddress + "------------------------");
+		
+		List<String> userAddress = service.getAddress(useraddress);
+		System.out.println("userAddress------------------------" + userAddress);
+
+		request.setAttribute("addressList", userAddress);
+		request.setAttribute("userScore", userScore);
+		request.setAttribute("useraddress", useraddress);
+
+		return "user/mypage/myPage";
+	}
+
+	// 회원 정보 수정 전 비밀번호 체크
+	@RequestMapping(value = "userPasswdCheck", method = RequestMethod.GET)
+	public String userPasswdCheck(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		return "user/update/userPasswdCheck";
+	}
+
+	// 회원 정보 수정 전 비밀번호 체크
+	@RequestMapping(value = "userPasswdCheckPro", method = RequestMethod.POST)
+	public String userPasswdCheckPro(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		response.setContentType("text/html; charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+
+		String userpasswd = request.getParameter("userpasswd");
+		String userpasswdCh = service.getUserPasswd(userId);
+
+		if (userpasswd.equals(userpasswdCh)) {
+			return "redirect:/user/userModifyForm";
+		} else {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('비밀번호가 맞지 않습니다.\\n다시 입력해주세요..');");
+			script.println("history.back();");
+			script.println("</script>");
+			script.close();
+		}
+
+		return "";
 	}
 
 	// 회원 정보 수정 페이지
-	@RequestMapping(value = "userModifyForm", method = RequestMethod.GET)
-	public String userModifyForm(HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "userModifyForm")
+	public String userModifyForm(Model model, User user) throws Exception {
 
-		return "user/userModifyForm";
+		user = service.getUserInfo(userId);
+
+		model.addAttribute("user", user);
+
+		System.out.println(user);
+		return "user/update/userModifyForm";
+	}
+
+	// 회원 정보 수정 처리
+
+	@RequestMapping(value = "userModifyPro", method = RequestMethod.POST)
+	public void userModifyPro(Model model, User user, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		response.setContentType("text/html; charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+
+		System.out.println(user);
+		int check = service.setUserUpdate(user);
+		PrintWriter script = response.getWriter();
+
+		if (check == 1) {
+			script.println("<script>");
+			script.println(" alert('수정이 완료되었습니다.');");
+			script.println("location.href = '/zSpringProject/user/myPage'");
+			script.println("</script>");
+			script.close();
+		}
 	}
 
 	// 구매 내역
@@ -411,4 +539,52 @@ public class UserController {
 
 		return "user/jjimList";
 	}
+
+	// 회원 탈퇴
+	@RequestMapping(value = "userDelete", method = RequestMethod.GET)
+	public String userDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		response.setContentType("text/html; charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+
+		PrintWriter script = response.getWriter();
+
+		script.println("<script>");
+		script.println(" if (confirm('정말 탈퇴하시겠습니까?')) {");
+		service.deleteUser(userId);
+		session.invalidate();
+		script.println(" alert('탈퇴가 완료되었습니다.\\n그동안 도토리마켓을 이용해주셔서 감사합니다.');");
+		script.println("location.href = '/zSpringProject/main/main'");
+		script.println("   } else {");
+		script.println("alert('탈퇴를 취소합니다.');");
+		script.println("location.href = '/zSpringProject/user/myPage'}");
+		script.println("</script>");
+		script.close();
+
+		return "redirect:/main/main";
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	// 회원가입 폼
+	@RequestMapping(value = "joinFormTest", method = RequestMethod.GET)
+	public String joinFormTest(HttpServletRequest request) throws Exception {
+		return "user/join/joinForm";
+	}
+
+	// ID 중복체크 창 TEST
+	@ResponseBody
+	@RequestMapping(value = "idCheckTest", method = RequestMethod.GET)
+	public String idCheckTest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		System.out.println(userId);
+
+		int userIdChecked = service.getUserIdCheck(userId);
+
+		// el로 사용할 수 있게 보냄
+		request.setAttribute("userIdChecked", userIdChecked);
+		request.setAttribute("userId", userId);
+		return "user/idCheckTest";
+	}
+
 }

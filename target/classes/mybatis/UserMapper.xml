@@ -27,7 +27,7 @@
 	<select id="getUserIdCheck" parameterType="String" resultType="String">
 		SELECT userid
 		FROM user1 
-		WHERE userid = #{userid}
+		WHERE userid = #{userId}
 	</select>
 	
 	<select id="Login" parameterType="List" resultType="String">
@@ -53,4 +53,42 @@
 		FROM user1
 		WHERE username = #{userName}
 	</select>
+	
+	<delete id="deleteUser" parameterType="String">
+		DELETE FROM user1
+    	WHERE userid = #{userid}
+	</delete>
+
+	<update id="setUserUpdate" parameterType="User">
+		UPDATE user1 
+		SET userpasswd = #{userpasswd}, username = #{username}, useremail=#{useremail},  userphone = #{userphone}, useraddress = #{useraddress}
+		WHERE userid=#{userid} 
+	</update>
+	
+	<select id="getUserPasswd" parameterType="String" resultType="String">
+		SELECT userpasswd
+		FROM user1
+		WHERE userid = #{userid}
+	</select>
+	
+	<select id="getUserAddress" parameterType="String" resultType="String">
+		SELECT substr(useraddress, 0, instr(useraddress, ' ', 1, 4))
+		FROM user1
+		WHERE userid = #{userId}
+	</select>
+	
+	<select id="getAddress" parameterType="String" resultType="String">
+		SELECT substr(useraddress, 0, instr(useraddress, ' ', 1, 4))
+		FROM user1
+		WHERE substr(useraddress, 0, instr(useraddress, ' ', 1, 2)) =substr(#{useraddress}, 0, instr(#{useraddress}, ' ', 1, 2)) and useraddress not in(#{useraddress}) 
+	</select>
+	
+	<select id="getUserList" parameterType="int" resultType="User">
+		SELECT *
+		FROM   (SELECT * 
+		        FROM user1 
+		        ORDER BY userscore DESC)
+		WHERE  ROWNUM &lt;= #{count} 
+	</select>
+	
 </mapper>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -24,14 +24,29 @@
 		<property name="prefix" value="/view/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	
 	<!-- <mvc:resources location="/img/, /WEB-INF/resources/" mapping="/img/**" 
 		cache-period="60" /> -->
+
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
 
 	<bean class="repository.MybatisUserDao">
 		<property name="dbname" value="Oracle" />
 	</bean>
+	
+	<bean class="repository.MybatisBoardDao">
+		<property name="dbname" value="Oracle" />
+	</bean>
+	
 	<bean class="repository.MybatisWebNoteDao">
 		<property name="dbname" value="Oracle" />
 	</bean>
-
+	<bean class="repository.CScenterDao">
+		<property name="dbname" value="Oracle"></property>
+	</bean>
 </beans>

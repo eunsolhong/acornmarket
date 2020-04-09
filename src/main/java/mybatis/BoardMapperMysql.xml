@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.BoardMapper">
+	<cache />
+
+	<select id="getArticleCount" parameterType="String"
+		resultType="int">
+		select ifnull(count(*),0) from board where category =
+		#{category}
+	</select>
+
+	<select id="getArticles" parameterType="hashmap"
+		resultType="Board">
+		select * from board where category = #{category}
+		order by boardnum desc
+	</select>
+	
+	<!-- mysql version
+	 <select id="getlistArticles" resultType="Board">
+		 select * from board where date_format(regdate, "%y%m%d") = curdate()
+	</select> -->
+	
+	 <select id="getlistArticles" resultType="Board">
+		 select * from board where to_char(regdate, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd') 
+	</select> 
+	
+
+	 <select id="insert_max" resultType="int">
+		select max(boardnum)+1 from
+		board
+	</select> 
+
+	<insert id="insert" parameterType="Board">
+		insert into board values
+		(#{boardnum},#{userid},#{filename},#{readcount},now(),#{subject}
+		,#{content},#{address},#{price},#{category},#{passwd})
+	</insert>
+
+	<update id="content_update" parameterType="int">
+		update board set
+		readcount=readcount + 1 where boardnum = #{boardnum}
+	</update>
+
+	<select id="getArticle" parameterType="int" resultType="Board">
+		select *
+		from board where boardnum =#{boardnum}
+	</select>
+
+	<select id="getPasswd" parameterType="int" resultType="string">
+		select
+		passwd from board where boardnum = #{boardnum}
+	</select>
+
+	<update id="update" parameterType="Board">
+		update board set
+		userid=#{userid},filename=#{filename},subject=#{subject}
+		,content=#{content},address=#{address},price=#{price},category=#{category},passwd=#{passwd} where
+		boardnum=#{boardnum}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from board where boardnum =
+		#{boardnum}
+	</delete>
+</mapper>

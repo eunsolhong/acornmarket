@@ -126,18 +126,6 @@
 
 				<p><br> 
 
-		        <a href="${kakaoApiUrl}">
-
-            		<img src="${pageContext.request.contextPath}/img/kakao_account_login_btn_large_narrow.png" width="200"/>
-
-        		</a> 
-
-    	        <a href="${naverApiUrl}">
-
-    	        	<img src="${pageContext.request.contextPath}/img/Log in with NAVER_Official_Green.PNG" width="200"/>
-
-        		</a> 
-
 			</form>
 
 		</div>
