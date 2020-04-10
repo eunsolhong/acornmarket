@@ -13,6 +13,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import model.Board;
+import model.Likecheck;
 import mybatis.AbstractRepository;
 
 public class MybatisBoardDao extends AbstractRepository {
@@ -69,12 +70,12 @@ public class MybatisBoardDao extends AbstractRepository {
 
 		String statement = null;
 
-		int number = article.getBoardnum();
-
+		int number = 0;
 		try {
+			number = sqlSession.selectOne(namespace + ".insert_max");
+			
 			article.setBoardnum(number);
 			sqlSession.insert(namespace + ".insert", article);
-			
 			sqlSession.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,13 +151,98 @@ public class MybatisBoardDao extends AbstractRepository {
 	}
 	
 	
-	//좋아요
+	//좋아요 가져오기 
+	public List<Likecheck> like_check(HashMap<String,Object> hashMap) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			String statement = namespace + ".like_check";
+			if(sqlSession.selectOne(statement,hashMap)== null) {
+			return check;
+			}else
+			return sqlSession.selectOne(statement, hashMap);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public void like_check_cancel(HashMap<String, Object> hashMap) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			sqlSession.update(namespace) + ".like_check_cancel", hashMap);
+			sqlSession.commit();
+		} catch(Exception e) {	
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	  public int read(int ) { SqlSession sqlSession =
+	  getSqlSessionFactory().openSession(); try { String statement = namespace +
+	  ".read";
+	  
+	  return sqlSession.selectOne(statement); } finally { sqlSession.close(); } }
+	 
 	
 	
+	public int countbyLike(HashMap<String, Object> hashMap) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			String statement = namespace + ".countbyLike";
+
+			return sqlSession.selectOne(statement, hashMap);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public int create(HashMap<String,Object> hashMap) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			sqlSession.insert(namespace + ".create");
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			sqlSession.close();
+		}
+	}	
 	
 	
+
+	public void likeCntUp(int boardnum) { //해당 articlenum 게시물의 좋아요값 증가
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		
+		try {
+			
+			sqlSession.update(namespace+".likeCntUp", boardnum);
+			sqlSession.commit();
+		}catch (Exception e) {
+				e.printStackTrace();
+		} finally {			
+				sqlSession.close();		
+		}
+		
+		
+	}
+
 	
-	
+	public void likeCntDown(int boardnum) { //해당 articlenum 게시물의 좋아요값 증가
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		
+		try {
+			
+			sqlSession.update(namespace+".likeCntDown", boardnum);
+			sqlSession.commit();
+		}catch (Exception e) {
+				e.printStackTrace();
+		} finally {			
+				sqlSession.close();		
+		}
+		
+		
+	}
 	
 	
 	

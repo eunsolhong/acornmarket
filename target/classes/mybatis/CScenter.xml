@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.CScenter">
+	<cache />
+
+	<select id="getArticles1" resultType="CScenter">
+		select * from csboard where
+		category = 'notice' order by regdate desc 
+	</select>
+
+	<select id="getArticles2" resultType="CScenter">
+		select * from csboard where
+		substr(category,1,3)='faq'
+	</select>
+
+	<select id="getArticleCount" resultType="int">
+		select nvl(count(*),0)
+		from csboard where category = 'notice'
+	</select>
+
+	<select id="getNotice" parameterType="hashmap" resultType="CScenter">
+		select * from(select rownum rnum,a.* from(select * from csboard where
+		category = 'notice' order by regdate desc) a)where rnum between #{getPageStart}
+		and #{getPageEnd}
+	</select>
+
+	<select id="insert_max" resultType="int">
+		select nvl(max(num)+1,1) from
+		csboard
+	</select>
+
+	<insert id="insert" parameterType="CScenter">
+		insert into csboard values
+		(#{num},#{adminid},#{subject},#{readcount},#{content},#{category},#{passwd},sysdate,#{ip})
+	</insert>
+
+	<select id="getArticleNum" resultType="int">
+		select nvl(max(num),1)
+		from csboard
+	</select>
+
+	<select id="getArticle" parameterType="int" resultType="CScenter">
+		select *
+		from csboard where num =#{num}
+	</select>
+
+	<update id="update" parameterType="CScenter">
+		update csboard set
+		adminid=#{adminid},
+		subject=#{subject},
+		readcount=#{readcount},
+		content=#{content},
+		category=#{category},
+		passwd=#{passwd},
+		regdate=sysdate,
+		ip=#{ip}
+		where num=#{num}
+	</update>
+
+	<select id="getPasswd" parameterType="int" resultType="string">
+		select
+		passwd from csboard where num = #{num}
+	</select>
+
+	<delete id="delete" parameterType="int">
+		delete from csboard where num
+		= #{num}
+	</delete>
+
+	<select id="getArticle1" resultType="CScenter">
+		select * from csboard where
+		category='faq1'
+	</select>
+
+	<select id="getArticle2" resultType="CScenter">
+		select * from csboard where
+		category='faq2'
+	</select>
+</mapper>
