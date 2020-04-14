@@ -7,6 +7,7 @@
 		<typeAlias type="model.Board" alias="Board"/>
 		<typeAlias type="model.WebNote" alias="WebNote"/>
 		<typeAlias type="model.CScenterDataBean" alias="CScenter" />
+		<typeAlias type="model.Reply" alias="Reply" />
 	</typeAliases>
 	
 	<environments default="development">
@@ -26,5 +27,6 @@
 		<mapper resource="mybatis/BoardMapper.xml" />
 		<mapper resource="mybatis/WebNoteMapper.xml"/>
 		<mapper resource="mybatis/CScenter.xml" />
+		<mapper resource="mybatis/ReplyMapper.xml" />
 	</mappers>
 </configuration>

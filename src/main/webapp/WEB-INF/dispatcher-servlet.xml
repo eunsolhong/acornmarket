@@ -46,7 +46,13 @@
 	<bean class="repository.MybatisWebNoteDao">
 		<property name="dbname" value="Oracle" />
 	</bean>
+	
 	<bean class="repository.CScenterDao">
-		<property name="dbname" value="Oracle"></property>
+		<property name="dbname" value="Oracle" />
 	</bean>
+	
+	<bean class="repository.MybatisReplyDao">
+		<property name="dbname" value="Oracle" />
+	</bean>
+	
 </beans>

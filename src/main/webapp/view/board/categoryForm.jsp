@@ -64,12 +64,24 @@
 						<li><a
 							href="${pageContext.request.contextPath}/board/categoryForm?category=디지털/가전"
 							title="">디지털/가전</a></li>
-						<li><a href="${pageContext.request.contextPath}/board/categoryForm?category=가구/인테리어" title="">가구/인테리어</a></li>
-						<li><a href="${pageContext.request.contextPath}/board/categoryForm?category=여성패션/잡화" title="">여성패션/잡화 </a></li>
-						<li><a href="${pageContext.request.contextPath}/board/categoryForm?category=남성패션/잡화" title="">남성패션/잡화 </a></li>
-						<li><a href="${pageContext.request.contextPath}/board/categoryForm?category=뷰티/미용" title="">뷰티/미용</a></li>
-						<li><a href="${pageContext.request.contextPath}/board/categoryForm?category=반려동물용품" title="">반려동물용품</a></li>
-						<li><a href="${pageContext.request.contextPath}/board/categoryForm?category=기타중고물품" title="">기타중고물품</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/board/categoryForm?category=가구/인테리어"
+							title="">가구/인테리어</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/board/categoryForm?category=여성패션/잡화"
+							title="">여성패션/잡화 </a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/board/categoryForm?category=남성패션/잡화"
+							title="">남성패션/잡화 </a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/board/categoryForm?category=뷰티/미용"
+							title="">뷰티/미용</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/board/categoryForm?category=반려동물용품"
+							title="">반려동물용품</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/board/categoryForm?category=기타중고물품"
+							title="">기타중고물품</a></li>
 					</ul>
 				</div>
 			</div>
@@ -81,35 +93,37 @@
 				<div class="container">
 					<div class="row">
 						<div class="well well2">
-							
-							
-						 <c:if test="${userid ne null}">
-							<div class="writebutton">
-							<input type="submit" 
-								onclick="location.href='${pageContext.request.contextPath}/board/write'"
-								value="글쓰기">
+
+
+							<c:if test="${userid ne null}">
+								<div class="writebutton">
+									<input type="submit"
+										onclick="location.href='${pageContext.request.contextPath}/board/write'"
+										value="글쓰기">
 								</div>
-						 </c:if> 
-						
+							</c:if>
+
 							<c:if test="${userid eq null }">
-							<div class="writebutton">
-							<input type="submit" 
-								onclick="location.href='${pageContext.request.contextPath}/user/selectJoinForm'"
-								value="글쓰기">
+								<div class="writebutton">
+									<input type="submit"
+										onclick="location.href='${pageContext.request.contextPath}/user/selectJoinForm'"
+										value="글쓰기">
 								</div>
-							
-							</c:if>	  				
-							
+
+							</c:if>
+
 							<p></p>
 
 							<div class="list-group">
 								<c:forEach items="${li}" var="list">
-									<a href="#" class="list-group-item">
+									<div href="#" class="list-group-item">
 										<div class="media col-md-3">
 											<figure class="pull-left">
 												<img class="media-object img-rounded img-responsive"
-													src="${pageContext.request.contextPath}/uploadFile/${list.filename}"  alt=""></figure>
-													
+													src="${pageContext.request.contextPath}/uploadFile/${list.filename}"
+													alt="">
+											</figure>
+
 										</div>
 
 										<div class="col-md-6">
@@ -117,34 +131,44 @@
 
 											<table>
 												<tr>
-												<%-- 	<td width="20%">[ ${list.boardnum} ] </td> --%>
-													<td> ${list.subject}</td>
+													<td>${list.subject}</td>
 												</tr>
-												</table>
+											</table>
 
-												<p class="list-group-item-text">${list.price} 원</p>
+											<p class="list-group-item-text">${list.price}원</p>
 										</div>
+
 
 										<div class="col-md-3 text-center">
-											
-										
-										
-										<c:if test="${list.soldout == 0}">
-											<button type="button" class="btn btn-info btn-lg btn-block blue" 
-											onclick="location.href='${pageContext.request.contextPath}/board/content?num=${list.boardnum}'">구매하기</button>
-										
-											
-											<button type="button" class="btn btn-danger btn-lg btn-block blue" 
-											onclick="location.href='${pageContext.request.contextPath}/board/content?num=${list.boardnum}'">판매중</button>
-										</c:if>
-										
-										<c:if test="${list.soldout != 0}">
-											<button type="button" class="btn btn-danger btn-lg btn-block blue" 
-											onclick="location.href='${pageContext.request.contextPath}/board/content?num=${list.boardnum}'">판매완료</button>
-										</c:if>
+
+
+											<c:choose>
+												<c:when test="${userid ne null}">
+													<a href='javascript: like_func(${userid},${boardnum});'> <img
+														class="like_img1" src='../img/list/dislike.png'
+														id='like_img'></a>
+												</c:when>
+												<c:otherwise>
+													<a href='javascript: login_need();'> <img
+														class="like_img1" src='../img/list/dislike.png'></a>
+												</c:otherwise>
+											</c:choose>
+
+
+											<c:if test="${list.soldout == 0}">
+												<button type="button"
+													class="btn btn-info btn-lg btn-block blue"
+													onclick="location.href='${pageContext.request.contextPath}/board/content?num=${list.boardnum}'">판매중</button>
+											</c:if>
+
+											<c:if test="${list.soldout != 0}">
+												<button type="button"
+													class="btn btn-danger btn-lg btn-block blue"
+													onclick="location.href='${pageContext.request.contextPath}/board/content?num=${list.boardnum}'">판매완료</button>
+											</c:if>
 										</div>
-										
-									</a>
+
+									</div>
 								</c:forEach>
 
 
@@ -172,5 +196,44 @@
 		<c:if test="${endPage < pageCount}">
 			<a href="list?pageNum=${startPage + bottomLine}">[다음]</a>
 		</c:if>
+
+		<!-- 좋아요 -->
+		<script>
+			function like_func(userid, boardnum) {
+				var frm_read = $('#frm_read');
+				var boardnum = $('#boardnum', frm_read).val();
+				
+		
+				$.ajax({
+					url : "${pageContext.request.contextPath}/board/category/like",
+					type : "GET",
+					cache : false,
+					dataType : "json",
+					data : 'boardnum=' + boardnum, 'userid=' + userid, 
+					success : function(data) {
+						var msg = '';
+						var like_img = '';
+						msg += data.msg;
+						alert(msg);
+
+						if (data.like_check == 0) {
+							like_img = "./img/list/dislike.png";
+						} else {
+							like_img = "./img/list/like.png";
+						}
+						$('#like_img', frm_read).attr('src', like_img);
+						$('#like_cnt').html(data.like_cnt);
+						$('#like_check').html(data.like_check);
+					},
+					
+					
+					error : function(request, status, error) {
+						alert("code:" + request.status + "\n" + "message:"
+								+ request.responseText + "\n" + "error:"
+								+ error);
+					}
+				});
+			}
+		</script>
 </body>
 </html>

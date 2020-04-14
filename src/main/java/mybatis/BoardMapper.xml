@@ -14,22 +14,22 @@
 	<select id="getArticles" parameterType="hashmap"
 		resultType="Board">
 		select * from board where category = #{category}
-		order by boardnum desc
+		order by
+		boardnum desc
 	</select>
-	
-	 <select id="getlistArticles" resultType="Board">
-		 select * from board where to_char(regdate, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd') 
-	</select> 
-	
 
-	 <select id="insert_max" resultType="int">
-		select max(boardnum)+1 from
-		board
-	</select> 
+	<select id="getlistArticles" resultType="Board">
+		select * from board where to_char(regdate, 'yyyymmdd') = to_char(sysdate,
+		'yyyymmdd')
+	</select>
+
+	<select id="insert_max" resultType="int">
+		select max(boardnum)+1 from board
+	</select>
 
 	<insert id="insert" parameterType="Board">
 		insert into board values
-		(#{boardnum},#{userid},#{filename},#{readcount},to_char(sysdate, 'yyyy-mm-dd'),#{subject},#{content},#{address},#{price},#{category},0,#{passwd},0)
+		(#{boardnum},#{userid},#{filename},#{readcount},sysdate,#{subject},#{content},#{address},#{price},#{category},0,#{passwd},0)
 	</insert>
 
 	<update id="content_update" parameterType="int">
@@ -50,28 +50,57 @@
 	<update id="update" parameterType="Board">
 		update board set
 		userid=#{userid},filename=#{filename},subject=#{subject}
-		,content=#{content},address=#{address},price=#{price},category=#{category},passwd=#{passwd} where
+		,content=#{content},address=#{address},price=#{price},category=#{category},passwd=#{passwd}
+		where
 		boardnum=#{boardnum}
 	</update>
 
 	<delete id="delete" parameterType="int">
-		delete from board where boardnum =
+		delete from board where
+		boardnum =
 		#{boardnum}
 	</delete>
-	
-	
-	<!-- 좋아요 -->
+
+
+	<!-- 좋아요 카운트 올리기 -->
 	<update id="like_check" parameterType="HashMap">
-    update likecheck
-    set likecount  = likecount  + 1 
-    where userid=#{userid} and boardnum=#{boardnum}
-  	</update>
-  
-  	<update id="like_check_cancel" parameterType="HashMap">
-    update likecheck
-    set likecount  = 0
-    where userid=#{userid} and boardnum=#{boardnum}
-  	</update>
-  	
-  	
+		update likecheck
+		set likecount = likecount + 1
+		where userid=#{userid} and boardnum=#{boardnum}
+	</update>
+
+	<!--좋아요 취소  -->
+	<update id="like_check_cancel" parameterType="HashMap">
+		update likecheck
+		set likecount = 0
+		where userid=#{userid} and boardnum=#{boardnum}
+	</update>
+
+	<!-- 좋아요읽기 -->
+	<select id="read" resultType="Board" parameterType="int">
+		select boardnum,
+		category, userid, subject, content, thumb, filename, readcount, regdate,
+		likecount
+		from board
+		where boardnum=#{boardnum}
+	</select>
+
+	<!-- 좋아요 세기  -->
+	<select id="countbyLike" resultType="int" parameterType="HashMap">
+		select count(likenum) as likecount 
+		from likecheck
+		where boardnum=#{boardnum} and userid=#{userid}
+	</select>
+
+	<!-- 처음 좋아요를 누를 때  -->
+	<insert id="create" parameterType="HashMap">
+		insert into likecheck(likenum, boardnum, userid, likecount)
+		values ((select nvl(max(likenum), 0) + 1 as likenum from likecheck),
+		#{boardnum}, #{userid}, 0)
+	</insert>
+
+
+
+
+
 </mapper>
