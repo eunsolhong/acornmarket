@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import model.Board;
+import model.Reply;
 import repository.MybatisBoardDao;
 import repository.MybatisReplyDao;
 
@@ -36,9 +37,9 @@ public class BoardController {
 	@Autowired
 	MybatisBoardDao dbPro;
 
-//	@Autowired
-//	MybatisReplyDao replyPro;
-	
+	@Autowired
+	MybatisReplyDao replyPro;
+
 	@ModelAttribute
 	public void initProcess(HttpServletRequest request) {
 
@@ -58,12 +59,10 @@ public class BoardController {
 
 	@RequestMapping(value = "list")
 	public String board_list(HttpServletRequest request, Model m) {
-		
-			List li = dbPro.getlistArticles();
-			System.out.println(">>>>>" + li );
-			m.addAttribute("li", li);
-		
-			
+
+		List li = dbPro.getlistArticles();
+		m.addAttribute("li", li);
+
 		return "board/list";
 	}
 
@@ -74,10 +73,11 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "writePro", method = RequestMethod.POST)
-	public String board_writePro(HttpServletRequest multipart, Board article, Model m, String address1, String address2) throws Exception {
+	public String board_writePro(HttpServletRequest multipart, Board article, Model m, String address1, String address2)
+			throws Exception {
 
 		article.setAddress(address1 + " " + address2);
-		
+
 		article.setFilename("null");
 		m.addAttribute("category", article.getCategory());
 
@@ -141,7 +141,7 @@ public class BoardController {
 		// int endRow = currentPage * pageSize;
 
 		List li = dbPro.getArticles(startRow, endRow, category);
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		int number = count - (currentPage - 1) * pageSize;
 
@@ -172,8 +172,9 @@ public class BoardController {
 	public String content(int num, Model m) throws Exception {
 
 		Board article = dbPro.getArticle(num);
-		
+
 		m.addAttribute("article", article);
+
 		return "board/content";
 	}
 
@@ -190,7 +191,7 @@ public class BoardController {
 	public String board_updatePro(HttpServletRequest request, Board article, Model m) throws Exception {
 
 		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
-		
+
 		dbPro.updateArticle(article);
 
 		request.setAttribute("boardnum", boardnum);
@@ -208,10 +209,47 @@ public class BoardController {
 	@RequestMapping(value = "deletePro", method = RequestMethod.POST)
 	public String board_deletePro(int num, String passwd, Model m) throws Exception {
 
-		
 		int check = dbPro.deleteArticle(num, passwd);
 		m.addAttribute("check", check);
 		return "board/deletePro";
 	}
+
+	@RequestMapping(value = "replyList", method = RequestMethod.GET)
+	public String reply_List(Model m, int boardnum) throws Exception {
+
+	List list = replyPro.readReply(boardnum);
 	
+	m.addAttribute("list", list);
+	m.addAttribute("boardnum", boardnum);
+
+		return "board/updatePro";
+	}
+
+	@RequestMapping(value = "replyinsert", method = RequestMethod.POST)
+	public String reply_insert(HttpServletRequest request, Reply reply) throws Exception {
+		
+		System.out.println(reply);
+		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
+
+		replyPro.insertreply(reply);
+		
+		
+		
+		request.setAttribute("boardnum", boardnum);
+		
+		return "reply/replyList";
+	}
+
+	@RequestMapping(value = "replyupdate", method = RequestMethod.POST)
+	public String reply_update() {
+
+		return "";
+	}
+
+	@RequestMapping(value = "replydelete", method = RequestMethod.POST)
+	public String reply_delete() {
+
+		return "";
+	}
+
 }// class end

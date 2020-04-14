@@ -127,8 +127,7 @@
 									</div>
 
 									<div style="float: center; width: 70%;">
-										<div style=" height: 350px;"
-											id="map"></div>
+										<div style="height: 350px;" id="map"></div>
 									</div>
 									<br>
 
@@ -148,10 +147,14 @@
 											onclick="location.href='${pageContext.request.contextPath}/board/categoryForm?category=${article.category}'">
 										<p></p>
 									</div>
+								</form>
+								<hr>
 
-									<hr>
+								<!-- 댓글창 -->
+								<form name="reply" method="post">
+									<input type="hidden" name="userid" value="22"> <input
+										type="hidden" name="boardnum" value="${article.boardnum}">
 
-									<!-- 댓글창 -->
 									<div class="form-group1 re1">
 										<div class="col-md-12">
 											<textarea class="form-control" id="textarea" name="comment"
@@ -160,11 +163,19 @@
 									</div>
 									<p></p>
 									<div class=button1 style="margin-left: 33%;">
-										<input type="button" value="댓글작성">
+										<input type="submit" id="commentWrite" value="댓글작성">
 									</div>
+								</form>
+								<br>
+
+								<div class="col-md-12">
+									<textarea class="form-control" id="textarea" name="comment"
+										cols="40" rows="3" value=""></textarea>
+								</div>
+
 							</div>
 						</div>
-						</form>
+
 					</div>
 				</div>
 			</div>
@@ -172,6 +183,7 @@
 	</div>
 	</div>
 	</div>
+
 	<script>
 		//container : 지도를 표시할 div의 아이디
 		var container = document.getElementById('map');
@@ -221,8 +233,47 @@
 	</script>
 
 
+     <!-- 댓글창 -->
+	<script type="text/javascript">
+	//	$(window).load(function(){
+			$("#commentWriter").click(function(){
+				var action = `${pageContext.request.contextPath}/board/replyinsert`;
+				var data = {
+					//넘기는 것 아래 형식으로 써서넘기기
+					// 키 : 밸류 ( 문서에서 리플라이(폼네임).(이름을 가진 값))
+					comment : document.reply.comment,
+					userid : document.reply.userid,
+					boardnum : document.reply.boardnum
+
+				};
+
+				$.ajax({ 
+					type : 'POST',//데이터 처리방식
+					url : action, //서비스 주소
+					data : data, //
+					dataType : 'json',
+					success : function(result) {
+						alert(result)
+
+						
+					}, // Ajax success end
+				
+					error : function(request, status, error) {
+						alert("code:" + request.status + "\n" + "message:"
+								+ request.responseText + "\n" + "error:"
+								+ error);
+					} // Ajax error 
+
+				}); // Ajax end
+
+			}
+		}
+		}
+		
+		
+	</script>
+
 
 
 
 </body>
-</html>
